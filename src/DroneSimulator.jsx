@@ -15,11 +15,21 @@ const DroneSimulator = () => {
     const handleDroneSpeed = (data) => {
       setDroneSpeedFunc(data)
     }
+
+    const getBannerReference = () => {
+      if (window.location.hostname.includes('localhost')) {
+        return '/assets/fixtures/nws_banner.png';
+      }
+    
+      return '/drone-simulator/assets/fixtures/nws_banner.png';
+    };
+
+
   
     return (
       <div className="app-container">
         <div className="app-title">
-          <img src="/assets/fixtures/nws_banner.png" alt="Logo" />
+          <img src={getBannerReference()} alt="Logo" />
         </div>
         
         <div className="content">
