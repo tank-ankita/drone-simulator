@@ -9,7 +9,7 @@
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "main -d dist"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@blockly/theme-modern": "^6.0.7",
