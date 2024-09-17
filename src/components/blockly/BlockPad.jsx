@@ -104,7 +104,7 @@ const BlockPad = ({
   return (    
     <div className='blockpad-wrapper'>
       <div className='button-bar'>
-        <ActionButton onClick={clearWorkspace} title="Clear Workspace"></ActionButton>
+        <ActionButton onClick={clearWorkspace} title="Clear Workspace" green></ActionButton>
         <ActionButton onClick={runSimulator} title="Launch Simulation"></ActionButton>
       </div>
       

@@ -23,8 +23,6 @@ const DroneSimulator = () => {
     
       return '/drone-simulator/assets/fixtures/nws_banner.png';
     };
-
-
   
     return (
       <div className="app-container">
