@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 
 import { useEffect, useRef } from 'react';
-
-import Theme from '@blockly/theme-modern';
 import PropTypes from 'prop-types';
 
 import { javascriptGenerator } from 'blockly/javascript';
@@ -12,6 +10,9 @@ import 'blockly/javascript';
 import 'blockly/blocks';
 
 import { toolbarConfig, toolbarBlocksDefinitions } from './config/toolbar.js'
+import ActionButton from './ActionButton';
+import  Theme  from './config/theme.js';
+import "../../css/blockpad.css";
 
 Blockly.setLocale(En);
 
@@ -55,7 +56,7 @@ const BlockPad = ({
     toolbarBlocksDefinitions(Blockly);
     workspaceRef.current = Blockly.inject(blocklyDiv.current, {
       toolbox: toolbar,
-      theme: theme,
+      theme: Theme,
       zoom: {
         controls: true,
         wheel: true,
@@ -67,23 +68,49 @@ const BlockPad = ({
         snap: true
       },
       trashcan: true,
-      move: true
+      move: true,
+      categoryStyles: {
+        takeoff_category: {
+          colour: '#3a86ff',
+        },
+        takeoff: {
+          colour: '#3a86ff',
+        },
+        logic_category: {
+          colour: '#5b80a5',
+        },
+        loop_category: {
+          colour: '#5ba55b',
+        },
+        math_category: {
+          colour: '#5b67a5',
+        },
+        procedure_category: {
+          colour: '#995ba5',
+        },
+        text_category: {
+          colour: '#5ba58c',
+        },
+        variable_category: {
+          colour: '#a55b99',
+        },
+        variable_dynamic_category: {
+          colour: '#a55b99',
+        },
+      },
     });
   }, []);
 
   return (
     // TODO: issue here that it is being rendered twice
     
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ height: '5%', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
-        <button style={{ padding: '10px 20px' }} onClick={clearWorkspace}>Clear Workspace</button>
-        <button style={{ padding: '10px 20px' }} onClick={runSimulator}>Launch Simulation</button>
+    <div className='blockpad-wrapper'>
+      <div className="button-bar">
+        <ActionButton className="action-button" onClick={clearWorkspace} title="Clear Workspace"></ActionButton>
+        <ActionButton className="action-button" onClick={runSimulator} title="Launch Simulation"></ActionButton>
       </div>
       
-      <div
-        ref={blocklyDiv}
-        style={{ height: '95%', width: '100%', backgroundColor: '#ffffff', border: '1px solid #ccc' }}
-      />
+      <div ref={blocklyDiv} className="blockly-area" />
     </div>
     
   );

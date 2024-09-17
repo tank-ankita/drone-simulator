@@ -1,0 +1,27 @@
+.blockpad-wrapper { 
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+  
+.button-bar {
+    height: auto; /* Adjust based on content size */
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #ccc; /* Optional: separates from Blockly area */
+  }
+  
+  .action-button {
+    padding: 10px 20px;
+  }
+  
+  .blockly-area {
+    height: 95%;
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+  }
+  

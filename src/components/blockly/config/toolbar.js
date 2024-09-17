@@ -1,4 +1,7 @@
 import { toolbarFunctionHandler } from './toolbarFunctionHandler.js'
+import { COLORS } from './color.js'
+
+
 toolbarFunctionHandler();
 
 export const toolbarConfig = {
@@ -7,7 +10,7 @@ export const toolbarConfig = {
     {
       kind: "category",
       name: "Takeoff",
-      colour: 230,
+      categorystyle: 'takeoff_category',
       contents: [
         {
           kind: "block",
@@ -22,7 +25,7 @@ export const toolbarConfig = {
     {
       kind: "category",
       name: "Navigation",
-      colour: 230,
+      categorystyle: 'navigation_category',
       contents: [
         {
           kind: "block",
@@ -113,7 +116,7 @@ export const toolbarConfig = {
     {
       kind: "category",
       name: "Land",
-      colour: 230,
+      categorystyle: 'land_category',
       contents: [
         {
           kind: "block",
@@ -131,6 +134,7 @@ export const toolbarConfig = {
     {
       kind: "category",
       name: "Logic",
+      categorystyle: 'logic_category',
       contents: [
         {
           kind: "block",
@@ -522,19 +526,21 @@ export const toolbarConfig = {
       kind: 'category',
       name: 'Functions',
       custom: 'PROCEDURE',
-      categorystyle: 'procedure_category',
+      categorystyle: 'functions_category',
     },
   ]
 };
 
 export const toolbarBlocksDefinitions = (Blockly) => {
+
+  // TAKEOFF
   Blockly.Blocks['takeoff'] = {
     init: function() {
       this.appendDummyInput()
           .appendField("Take off");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.TAKEOFF);
       this.setTooltip("Command to take off");
       this.setHelpUrl("");
     }
@@ -548,12 +554,13 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField("seconds");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.TAKEOFF);
       this.setTooltip("Command to take off after a specific number of seconds");
       this.setHelpUrl("");
     }
   };
 
+  // NAVIGATION
   Blockly.Blocks['set_speed'] = {
     init: function() {
       this.appendDummyInput()
@@ -562,7 +569,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField("cm/s");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to set drone speed");
       this.setHelpUrl("");
     }
@@ -576,7 +583,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField("seconds");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to set wait time for drone");
       this.setHelpUrl("");
     }
@@ -594,7 +601,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
       
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to fly forward a certain distance in inches or cm");
       this.setHelpUrl("");
     }
@@ -608,7 +615,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField("seconds");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to set wait time for drone");
       this.setHelpUrl("");
     }
@@ -627,7 +634,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
       
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to fly forward a certain distance in inches or cm");
       this.setHelpUrl("");
     }
@@ -641,7 +648,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField("seconds");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to set wait time for drone");
       this.setHelpUrl("");
     }
@@ -660,7 +667,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
       
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to fly forward a certain distance in inches or cm");
       this.setHelpUrl("");
     }
@@ -674,7 +681,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField("seconds");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to set wait time for drone");
       this.setHelpUrl("");
     }
@@ -692,7 +699,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
       
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to fly forward a certain distance in inches or cm");
       this.setHelpUrl("");
     }
@@ -706,7 +713,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField("seconds");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to set wait time for drone");
       this.setHelpUrl("");
     }
@@ -725,7 +732,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
       
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to fly forward a certain distance in inches or cm");
       this.setHelpUrl("");
     }
@@ -739,7 +746,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField("seconds");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to set wait time for drone");
       this.setHelpUrl("");
     }
@@ -758,7 +765,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
       
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to fly forward a certain distance in inches or cm");
       this.setHelpUrl("");
     }
@@ -772,7 +779,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField("seconds");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to set wait time for drone");
       this.setHelpUrl("");
     }
@@ -789,7 +796,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField(new Blockly.FieldNumber(0, 0, null), "z");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to set wait time for drone");
       this.setHelpUrl("");
     }
@@ -812,7 +819,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
 
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to fly forward a certain distance in inches or cm");
       this.setHelpUrl("");
     }
@@ -835,7 +842,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
 
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to fly forward a certain distance in inches or cm");
       this.setHelpUrl("");
     }
@@ -855,7 +862,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
 
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to fly forward a certain distance in inches or cm");
       this.setHelpUrl("");
     }
@@ -875,7 +882,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
 
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to fly forward a certain distance in inches or cm");
       this.setHelpUrl("");
     }
@@ -891,7 +898,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField("degree");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to set wait time for drone");
       this.setHelpUrl("");
     }
@@ -907,7 +914,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField("degree");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.NAVIGATION);
       this.setTooltip("Command to set wait time for drone");
       this.setHelpUrl("");
     }
@@ -919,7 +926,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField("land");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.LAND);
       this.setTooltip("Command to take off");
       this.setHelpUrl("");
     }
@@ -933,7 +940,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField("seconds then takeoff");
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
-      this.setColour(230);
+      this.setColour(COLORS.LAND);
       this.setTooltip("Command to take off after a specific number of seconds");
       this.setHelpUrl("");
     }

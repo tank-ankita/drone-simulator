@@ -18,21 +18,28 @@ const DroneSimulator = () => {
   
     return (
       <div className="app-container">
-        <div className="blockpad-container">
-          <BlockPad  
-            onDroneTakeOff={handleDroneTakeOff}
-            onDroneSetSpeed={handleDroneSpeed}
-          />
+        <div className="app-title">
+          <img src="../public/assets/fixtures/nws_banner.png" alt="Logo" />
         </div>
-        <div className="canvas-container">
-          <Canvas shadows>
-            <Suspense fallback={null}>
-              <App 
-                onDroneTakeOff={droneTakeOffFunc} 
-                onDroneSetSpeed={droneSpeedFunc}
-              />
-            </Suspense>
-          </Canvas>
+        
+        <div className="content">
+          <div className="blockpad-container">
+            <BlockPad  
+              onDroneTakeOff={handleDroneTakeOff}
+              onDroneSetSpeed={handleDroneSpeed}
+            />
+          </div>
+          
+          <div className="canvas-container">
+            <Canvas shadows>
+              <Suspense fallback={null}>
+                <App 
+                  onDroneTakeOff={droneTakeOffFunc} 
+                  onDroneSetSpeed={droneSpeedFunc}
+                />
+              </Suspense>
+            </Canvas>
+          </div>
         </div>
       </div>
     );
