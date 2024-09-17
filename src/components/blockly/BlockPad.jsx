@@ -101,16 +101,14 @@ const BlockPad = ({
     });
   }, []);
 
-  return (
-    // TODO: issue here that it is being rendered twice
-    
+  return (    
     <div className='blockpad-wrapper'>
-      <div className="button-bar">
-        <ActionButton className="action-button" onClick={clearWorkspace} title="Clear Workspace"></ActionButton>
-        <ActionButton className="action-button" onClick={runSimulator} title="Launch Simulation"></ActionButton>
+      <div className='button-bar'>
+        <ActionButton onClick={clearWorkspace} title="Clear Workspace"></ActionButton>
+        <ActionButton onClick={runSimulator} title="Launch Simulation"></ActionButton>
       </div>
       
-      <div ref={blocklyDiv} className="blockly-area" />
+      <div ref={blocklyDiv} className='blockly-area' />
     </div>
     
   );

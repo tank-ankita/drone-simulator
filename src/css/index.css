@@ -1,27 +1,25 @@
 .app-container {
+  height: 100vh; /* Full viewport height */
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Full height for the container */
 }
 
 .app-title {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 10px;
-  border-bottom: 10px solid #ccc;
-  /*text-align: center;  Center title */
+  height: auto; /* Adjust based on content size */
+  text-align: center;
+  background-color: white;
+  border-bottom: 1px solid #ccc;
 }
 
 .blockpad-container,
 .canvas-container {
   flex: 1;
-  padding: 10px;
+  
 }
 
 .content {
+  flex: 1; /* Takes the remaining height after title */
   display: flex;
-  flex: 1;
 }
 
 .blockpad-container {
@@ -69,4 +67,11 @@ html {
   overflow-x: hidden;
   overflow-y: scroll;
   text-rendering: optimizeLegibility;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
 }

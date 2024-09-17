@@ -1,27 +1,24 @@
 .blockpad-wrapper { 
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure it takes full height */
 }
   
 .button-bar {
-    height: auto; /* Adjust based on content size */
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid #ccc; /* Optional: separates from Blockly area */
-  }
-  
-  .action-button {
-    padding: 10px 20px;
-  }
+  height: auto;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #ccc; /* Optional: visual separation */
+}
+
   
   .blockly-area {
-    height: 95%;
-    width: 100%;
+    flex-grow: 1; /* Make blockly-area take the remaining space */
+    width: 100%; /* Ensure it stretches horizontally */
     background-color: #ffffff;
     border: 1px solid #ccc;
+    overflow: auto; /* Ensure it can scroll if content is too large */
   }
-  
