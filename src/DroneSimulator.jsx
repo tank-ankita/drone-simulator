@@ -19,7 +19,7 @@ const DroneSimulator = () => {
     return (
       <div className="app-container">
         <div className="app-title">
-          <img src="../public/assets/fixtures/nws_banner.png" alt="Logo" />
+          <img src="/assets/fixtures/nws_banner.png" alt="Logo" />
         </div>
         
         <div className="content">
