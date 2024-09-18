@@ -1,20 +1,18 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import ReactDOM from "react-dom/client";
 import DroneSimulator from "./DroneSimulator.jsx";
 import GameMode from "../src/pages/GameMode.jsx";
 
 import "./css/index.css";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+  ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
-          {/* Define your routes here */}
-          <Route path="/drone-simulator/" element={<DroneSimulator />} />
-          <Route path="/drone-simulator/game-mode" element={<GameMode />} />
+          <Route path="/" element={<DroneSimulator />} />
+          <Route path="/game-mode" element={<GameMode />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </React.StrictMode>
   );
-  
