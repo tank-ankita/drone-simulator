@@ -50,7 +50,6 @@ const BlockPad = ({
 
 
   useEffect(() => {
-    const theme = Theme;
     const toolbar =  toolbarConfig;
 
     toolbarBlocksDefinitions(Blockly);
@@ -68,36 +67,7 @@ const BlockPad = ({
         snap: true
       },
       trashcan: true,
-      move: true,
-      categoryStyles: {
-        takeoff_category: {
-          colour: '#3a86ff',
-        },
-        takeoff: {
-          colour: '#3a86ff',
-        },
-        logic_category: {
-          colour: '#5b80a5',
-        },
-        loop_category: {
-          colour: '#5ba55b',
-        },
-        math_category: {
-          colour: '#5b67a5',
-        },
-        procedure_category: {
-          colour: '#995ba5',
-        },
-        text_category: {
-          colour: '#5ba58c',
-        },
-        variable_category: {
-          colour: '#a55b99',
-        },
-        variable_dynamic_category: {
-          colour: '#a55b99',
-        },
-      },
+      move: true
     });
   }, []);
 
