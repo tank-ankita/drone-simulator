@@ -7,7 +7,7 @@ import { useFrame } from "@react-three/fiber"
 
 export const ISS = () => {
     const memoizedISS = useMemo(()=> {
-        return useGLTF('/assets/models/iss_model.glb')
+        return useGLTF('assets/models/iss_model.glb')
     })
     const issRef = useRef()
     useFrame(({clock}) =>{

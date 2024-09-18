@@ -13,7 +13,7 @@ export const Earth = () => {
 
     })
 
-    const [earthTexture] = useTexture(['/assets/textures/earth_daymap.jpg'])
+    const earthTexture = useTexture('assets/textures/earth_daymap.jpg')
 
     return (
         <group>

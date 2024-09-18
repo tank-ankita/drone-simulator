@@ -11,7 +11,7 @@ export const Moon = () => {
         moonRef.current.rotation.y += 0.002;
     })
 
-    const [moonTexture] = useTexture(['/assets/textures/moon.jpg'])
+    const moonTexture = useTexture('assets/textures/moon.jpg')
 
     return <mesh ref={moonRef} position={[4,0,0]}>
         <sphereGeometry args={[0.5, 32, 32]} />  {/* [radius, x-axis, y-axis] */}
