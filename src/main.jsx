@@ -2,7 +2,7 @@ import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import ReactDOM from "react-dom/client";
 import DroneSimulator from "./DroneSimulator.jsx";
-import GameMode from "../src/pages/GameMode.jsx";
+import GameMode from "./pages/game-mode/GameMode.jsx";
 
 import "./css/index.css";
 
