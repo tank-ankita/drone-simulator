@@ -16,7 +16,11 @@ import "../../../css/blockpad.css";
 
 Blockly.setLocale(En);
 
-const BlockPad = ({ moveDroneForward }) => {
+const BlockPad = ({ 
+  moveDronePosY, 
+  moveDronePosZ,
+  moveDroneNegZ
+}) => {
   
   const blocklyDiv = useRef();
   let workspaceRef = useRef();
@@ -26,8 +30,18 @@ const BlockPad = ({ moveDroneForward }) => {
   };
 
   const droneTakeOff = (value) => {
-    moveDroneForward(value);
+    moveDronePosY(value);
   }
+
+  const flyForwardDistance = (distance, measurement) => {
+    moveDronePosZ([distance, measurement]);
+  }
+  
+
+  const flyBackwardDistance = (distance, measurement) => {
+    moveDroneNegZ([distance, measurement]);
+  }
+
 
   const runSimulator = () => {
     var code = javascriptGenerator.workspaceToCode(Blockly.getMainWorkspace().current);
@@ -72,7 +86,9 @@ const BlockPad = ({ moveDroneForward }) => {
 };
 
 BlockPad.propTypes = {
-  moveDroneForward: PropTypes.func, 
+  moveDronePosY: PropTypes.any, 
+  moveDronePosZ: PropTypes.any,
+  moveDroneNegZ: PropTypes.any
 };
 
 export default BlockPad;

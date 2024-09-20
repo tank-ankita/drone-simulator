@@ -9,7 +9,11 @@ import PropTypes from 'prop-types';
 
 import '../../css/gameMode.css'
 
-const Galaxy = ({ moveDroneUp }) => {
+const Galaxy = ({ 
+  moveDronePosY, 
+  moveDronePosZ,
+  moveDroneNegZ
+}) => {
     const controlsRef = useRef();
 
     useFrame(() => {
@@ -25,7 +29,12 @@ const Galaxy = ({ moveDroneUp }) => {
             <OrbitControls ref={controlsRef} enablePan={false} enableZoom={true} />
             <ambientLight/>
             <Earth/>
-            <Drone controlsRef={controlsRef} moveDroneUp={moveDroneUp}/>
+            <Drone 
+              controlsRef={controlsRef} 
+              moveDronePosY={moveDronePosY}
+              moveDronePosZ={moveDronePosZ}
+              moveDroneNegZ={moveDroneNegZ}
+            />
         </>
     );
 };
@@ -43,8 +52,10 @@ const AnimatedStars = () => {
 }
 
 Galaxy.propTypes = {
-    moveDroneUp: PropTypes.func, 
-  };
+  moveDronePosY: PropTypes.any, 
+  moveDronePosZ: PropTypes.any, 
+  moveDroneNegZ: PropTypes.any
+};
   
 
 export default Galaxy;

@@ -30,42 +30,42 @@ export const toolbarFunctionHandler = () => {
         const fly_forward_distance = block.getFieldValue('DISTANCE')
         const fly_forward_unit = block.getFieldValue('UNIT') // cm or inches
 
-        return `flyForwardDistance(${fly_forward_distance},${fly_forward_unit});`;
+        return `flyForwardDistance(${fly_forward_distance}, '${fly_forward_unit}');`;
     } 
 
     // flying_forward_time
     javascriptGenerator.forBlock['flying_forward_time'] = function(block) {
         const fly_forward_time = block.getFieldValue('SECONDS')
-        return `flyForwardTime(${fly_forward_time});`;
+        return `flyForwardDistance(${fly_forward_time}, 'CM');`;
     } 
 
     // flying_backwards_distance
-    javascriptGenerator.forBlock['flying_forward_distance'] = function(block) {
+    javascriptGenerator.forBlock['flying_backward_distance'] = function(block) {
         const fly_backwards_distance = block.getFieldValue('DISTANCE')
         const fly_backwards_unit = block.getFieldValue('UNIT') // cm or inches
 
-        return `flyBackwardDistance(${fly_backwards_distance},${fly_backwards_unit});`;
+        return `flyBackwardDistance(${fly_backwards_distance},'${fly_backwards_unit}');`;
     } 
 
     // flying_backwards_time
-    javascriptGenerator.forBlock['flying_forward_time'] = function(block) {
+    javascriptGenerator.forBlock['flying_backward_time'] = function(block) {
         const fly_forward_time = block.getFieldValue('SECONDS')
-        return `flyBackwardTime(${fly_forward_time});`;
+        return `flyBackwardDistance(${fly_forward_time}, 'CM');`;
     } 
 
 
     // flying_left_distance
-    javascriptGenerator.forBlock['flying_forward_distance'] = function(block) {
+    javascriptGenerator.forBlock['flying_left_distance'] = function(block) {
         const fly_left_distance = block.getFieldValue('DISTANCE')
         const fly_left_unit = block.getFieldValue('UNIT') // cm or inches
 
-        return `flyLeftDistance(${fly_left_distance},${fly_left_unit});`;
+        return `flyLeftDistance(${fly_left_distance}, '${fly_left_unit}');`;
     } 
 
     // flying_left_time
     javascriptGenerator.forBlock['flying_left_time'] = function(block) {
         const fly_left_time = block.getFieldValue('SECONDS')
-        return `flyLeftTime(${fly_left_time});`;
+        return `flyLeftDistance(${fly_left_time},'CM');`;
     } 
 
 }

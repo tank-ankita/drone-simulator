@@ -7,9 +7,14 @@ import { useMemo, useRef, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from 'three';
 import PropTypes from 'prop-types';
-import { droneTakeOff } from './config/droneMovement.js';
+import { moveDroneUp, moveDroneForward, moveDroneBackward } from './config/droneMovement.js';
 
-export const Drone = ({ controlsRef, moveDroneUp }) => {
+export const Drone = ({ 
+    controlsRef, 
+    moveDronePosY,
+    moveDronePosZ,
+    moveDroneNegZ
+  }) => {
   const memoizedDrone = useMemo(() => {
     return useGLTF('assets/models/drone.glb');
   }, []);
@@ -45,7 +50,7 @@ export const Drone = ({ controlsRef, moveDroneUp }) => {
     // Update velocity based on key presses
     velocity.current.set(0, 0, 0);
 
-    // Update Drone Movements
+    // Update Drone Movements by reading the key
     if (keys.current.w) velocity.current.z -= speed; // Forward
     if (keys.current.s) velocity.current.z += speed; // Backward
     if (keys.current.a) velocity.current.x -= speed; // Left
@@ -75,9 +80,16 @@ export const Drone = ({ controlsRef, moveDroneUp }) => {
   useFrame(() => {
     if (!droneRef.current) return;
 
-    if(moveDroneUp) {
-      console.log("Moving drone by....", moveDroneUp)
-      droneTakeOff(moveDroneUp, keys);
+    if(moveDronePosY) {
+      moveDroneUp(moveDronePosY, keys);
+    }
+
+    if(moveDronePosZ) {
+      moveDroneForward(moveDronePosZ, keys);
+    }
+
+    if(moveDroneNegZ) {
+      moveDroneBackward(moveDroneNegZ, keys)
     }
 
 
@@ -98,5 +110,7 @@ export const Drone = ({ controlsRef, moveDroneUp }) => {
 
 
 Drone.propTypes = {
-  moveDroneUp: PropTypes.func, 
+  moveDronePosY: PropTypes.any, 
+  moveDronePosZ: PropTypes.any, 
+  moveDroneNegZ: PropTypes.any
 };
