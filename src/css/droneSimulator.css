@@ -1,25 +1,14 @@
-.app-container {
-  height: 100vh; /* Full viewport height */
-  display: flex;
-  flex-direction: column;
-}
-
-.app-title {
-  height: auto; /* Adjust based on content size */
-  text-align: center;
-  background-color: white;
-  border-bottom: 1px solid #ccc;
-}
-
 .blockpad-container,
 .canvas-container {
   flex: 1;
   
 }
 
-.content {
-  flex: 1; /* Takes the remaining height after title */
+.simulation-container {
+  border-top: 2px solid black;
+  flex: 1; 
   display: flex;
+  height: 100vh;
 }
 
 .blockpad-container {

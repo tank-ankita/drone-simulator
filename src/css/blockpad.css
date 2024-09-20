@@ -15,10 +15,10 @@
 }
 
   
-  .blockly-area {
-    flex-grow: 1; /* Make blockly-area take the remaining space */
-    width: 100%; /* Ensure it stretches horizontally */
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    overflow: auto; /* Ensure it can scroll if content is too large */
-  }
+.blockly-area {
+  flex-grow: 1; /* Make blockly-area take the remaining space */
+  width: 100%; /* Ensure it stretches horizontally */
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  overflow: auto; /* Ensure it can scroll if content is too large */
+}

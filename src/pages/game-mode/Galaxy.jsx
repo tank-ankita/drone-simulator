@@ -1,30 +1,31 @@
 /* eslint-disable react/no-unknown-property */
 
 import { useRef } from "react";
-import { OrbitControls, useHelper, Stars } from "@react-three/drei";
+import { OrbitControls, Stars } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { Earth }  from './Earth'
 import { Drone }  from './Drone'
+import PropTypes from 'prop-types';
 
-import * as THREE from 'three'
+import '../../css/gameMode.css'
 
-import '../../css/game-mode.css'
+const Galaxy = ({ moveDroneUp }) => {
+    const controlsRef = useRef();
 
-const Galaxy = () => {
-    const directionLightRef = useRef();
-    const directionLightRef2 = useRef();
-
-    useHelper(directionLightRef,  THREE.DirectionalLightHelper, 1, 'hotpink')
-    useHelper(directionLightRef2,  THREE.DirectionalLightHelper, 1, 'hotpink')
+    useFrame(() => {
+        if (controlsRef.current) {
+          controlsRef.current.update(); // Ensure the controls stay updated
+        }
+      });
 
     return (
         <>
             <color attach="background" args={['black']} />
             <AnimatedStars/>
-            <OrbitControls></OrbitControls>
-            <ambientLight></ambientLight>
-            <Drone></Drone>
+            <OrbitControls ref={controlsRef} enablePan={false} enableZoom={true} />
+            <ambientLight/>
             <Earth/>
+            <Drone controlsRef={controlsRef} moveDroneUp={moveDroneUp}/>
         </>
     );
 };
@@ -41,5 +42,9 @@ const AnimatedStars = () => {
     return<Stars ref={starsRef}/>
 }
 
+Galaxy.propTypes = {
+    moveDroneUp: PropTypes.func, 
+  };
+  
 
 export default Galaxy;

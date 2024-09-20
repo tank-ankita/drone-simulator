@@ -12,14 +12,11 @@ import 'blockly/blocks';
 import { toolbarConfig, toolbarBlocksDefinitions } from './config/toolbar.js'
 import ActionButton from './ActionButton';
 import  Theme  from './config/theme.js';
-import "../../css/blockpad.css";
+import "../../../css/blockpad.css";
 
 Blockly.setLocale(En);
 
-const BlockPad = ({ 
-    onDroneTakeOff, 
-    onDroneSetSpeed
-  }) => {
+const BlockPad = ({ moveDroneForward }) => {
   
   const blocklyDiv = useRef();
   let workspaceRef = useRef();
@@ -28,18 +25,8 @@ const BlockPad = ({
     Blockly.getMainWorkspace().clear();
   };
 
-  const droneTakeOff = (seconds_delay) => {
-    console.log("calling drine takeoff with delay of ", seconds_delay)
-    onDroneTakeOff(seconds_delay);
-    // to help reset the state of the drone so it can be triggered again
-    setTimeout(() => {
-      onDroneTakeOff(null);
-    }, 1000); 
-  }
-
-  const setDroneSpeed = (speed) => {
-    console.log('Speed set to ', speed)
-    onDroneSetSpeed(speed)
+  const droneTakeOff = (value) => {
+    moveDroneForward(value);
   }
 
   const runSimulator = () => {
@@ -85,8 +72,7 @@ const BlockPad = ({
 };
 
 BlockPad.propTypes = {
-  onDroneTakeOff: PropTypes.func, 
-  onDroneSetSpeed: PropTypes.func 
+  moveDroneForward: PropTypes.func, 
 };
 
 export default BlockPad;

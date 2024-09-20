@@ -1,15 +1,17 @@
 import { Canvas } from "@react-three/fiber";
+import PropTypes from 'prop-types';
 
 import Galaxy from './Galaxy'
-import '../../css/game-mode.css'
+import '../../css/gameMode.css'
 
-const GameMode = () => {
+export const GameMode = ({moveDroneUp}) => {
   return (
       <Canvas camera={{ fov: 75, near: 0.2, far: 1000, position: [0, 0, -10] }}>
-        <Galaxy/>
+        <Galaxy moveDroneUp={moveDroneUp}/>
       </Canvas>
-    
   );
 };
 
-export default GameMode;
+GameMode.propTypes = {
+  moveDroneUp: PropTypes.func, 
+};
