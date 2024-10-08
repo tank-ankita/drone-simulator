@@ -1,0 +1,73 @@
+.home-page {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .title-bar {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .logo {
+    width: 300px; /* Adjust as needed */
+    height: auto;
+  }
+  
+  /* Grid layout for course tiles */
+  .tiles-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 tiles per row */
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .tile {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+    width: 300px;
+    height: 400px;
+  }
+  
+  .tile:hover {
+    background-color: #022f60;
+  }
+  
+  .tile-image {
+    width: 100%; /* Adjust to fit within the tile */
+    height: 250px; /* Maintain a consistent height */
+    object-fit: cover;
+  }
+
+  .tile-title {
+   text-align: left;
+   padding-top: 10px;
+   font-weight: 800;
+   font-family: monospace;
+  }
+
+  .tile-details {
+    text-align: left;
+    padding-top: 20px;
+    font-family: monospace;
+  }
+  
+  .modal {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: auto;
+  }
+
+  .h3 {
+    text-align: left;
+  }
+  

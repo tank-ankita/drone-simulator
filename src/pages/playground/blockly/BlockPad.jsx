@@ -18,8 +18,13 @@ Blockly.setLocale(En);
 
 const BlockPad = ({ 
   moveDronePosY, 
+  moveDroneNegY,
   moveDronePosZ,
-  moveDroneNegZ
+  moveDroneNegZ,
+  moveDronePosX,
+  moveDroneNegX,
+  waitTime,
+  speed,
 }) => {
   
   const blocklyDiv = useRef();
@@ -29,19 +34,19 @@ const BlockPad = ({
     Blockly.getMainWorkspace().clear();
   };
 
-  const droneTakeOff = (value) => {
-    moveDronePosY(value);
-  }
-
-  const flyForwardDistance = (distance, measurement) => {
-    moveDronePosZ([distance, measurement]);
-  }
+  const droneTakeOff = (distance) => { moveDronePosY([distance, 'CM']);  }
   
+  const flyDown = (distance, measurement) => {  moveDroneNegY([distance, measurement]); }
+  const flyUp = (distance, measurement) => { moveDronePosY([distance, measurement]); }
 
-  const flyBackwardDistance = (distance, measurement) => {
-    moveDroneNegZ([distance, measurement]);
-  }
+  const flyForward = (distance, measurement) => { moveDronePosZ([distance, measurement]); }
+  const flyBackward = (distance, measurement) => { moveDroneNegZ([distance, measurement]); }
+  
+  const flyLeft = (distance, measurement) => { moveDroneNegX([distance, measurement]); }
+  const flyRight = (distance, measurement) => { moveDronePosX([distance, measurement]); }
 
+  const setSpeed = (value) => { speed(value) }
+  const setWaitTime = (value) => { waitTime(value) }
 
   const runSimulator = () => {
     var code = javascriptGenerator.workspaceToCode(Blockly.getMainWorkspace().current);
@@ -49,6 +54,9 @@ const BlockPad = ({
     eval(code)
   };
 
+  const reloadPage = () => {
+    location.reload();
+  }
 
   useEffect(() => {
     const toolbar =  toolbarConfig;
@@ -77,6 +85,7 @@ const BlockPad = ({
       <div className='button-bar'>
         <ActionButton onClick={clearWorkspace} title="Clear Workspace" green></ActionButton>
         <ActionButton onClick={runSimulator} title="Launch Simulation"></ActionButton>
+        <ActionButton onClick={reloadPage} title="Reset Simulation">/</ActionButton>
       </div>
       
       <div ref={blocklyDiv} className='blockly-area' />
@@ -87,8 +96,13 @@ const BlockPad = ({
 
 BlockPad.propTypes = {
   moveDronePosY: PropTypes.any, 
-  moveDronePosZ: PropTypes.any,
-  moveDroneNegZ: PropTypes.any
+  moveDroneNegY: PropTypes.any,
+  moveDronePosZ: PropTypes.any, 
+  moveDroneNegZ: PropTypes.any,
+  moveDronePosX: PropTypes.any, 
+  moveDroneNegX: PropTypes.any,
+  waitTime: PropTypes.any, 
+  speed: PropTypes.any
 };
 
 export default BlockPad;

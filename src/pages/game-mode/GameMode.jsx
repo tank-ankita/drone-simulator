@@ -5,16 +5,28 @@ import Galaxy from './Galaxy'
 import '../../css/gameMode.css'
 
 export const GameMode = ({
-  moveDronePosY, 
+    moveDronePosY,
+    moveDroneNegY,
     moveDronePosZ,
-    moveDroneNegZ
+    moveDroneNegZ,
+    moveDronePosX,
+    moveDroneNegX,
+    waitTime,
+    speed,
+    setDronePosition
   }) => {
   return (
-      <Canvas camera={{ fov: 75, near: 0.2, far: 1000, position: [0, 0, -10] }}>
+      <Canvas >
         <Galaxy 
           moveDronePosY={moveDronePosY}
+          moveDroneNegY={moveDroneNegY}
           moveDronePosZ={moveDronePosZ}
           moveDroneNegZ={moveDroneNegZ}
+          moveDronePosX={moveDronePosX}
+          moveDroneNegX={moveDroneNegX}
+          waitTime={waitTime}
+          speed={speed}
+          setDronePosition={setDronePosition}
         />
       </Canvas>
   );
@@ -22,6 +34,12 @@ export const GameMode = ({
 
 GameMode.propTypes = {
   moveDronePosY: PropTypes.any, 
-  moveDronePosZ: PropTypes.any,
-  moveDroneNegZ: PropTypes.any
+  moveDroneNegY: PropTypes.any,
+  moveDronePosZ: PropTypes.any, 
+  moveDroneNegZ: PropTypes.any,
+  moveDronePosX: PropTypes.any, 
+  moveDroneNegX: PropTypes.any,
+  waitTime: PropTypes.any, 
+  speed: PropTypes.any,
+  setDronePosition: PropTypes.any,
 };
