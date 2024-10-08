@@ -1,11 +1,11 @@
 import { AppContainer } from '../../components/AppContainer.jsx'
-import SpaceSimulator from "./simulator/SpaceSimulator.jsx"; 
+import CitySimulator from "./simulator/CitySimulator.jsx"; 
 import BlockPad from './blockly/BlockPad.jsx';
 import "../../css/droneSpaceSimulator.css";
 import { useState } from "react";
 
 
-const DroneSpaceSimulator = () => {
+const DroneCitySimulator = () => {
   const [moveDronePosY, setDronePosY] = useState(null);
   const [moveDroneNegY, setDroneNegY] = useState(null);
   const [moveDronePosZ, setDronePosZ] = useState(null);
@@ -100,7 +100,7 @@ const DroneSpaceSimulator = () => {
                   <span className="rotation">Yaw: {roundNumber(dronePosition.yRot) * 60}°</span>
                 </div>
               </div>
-              <SpaceSimulator 
+              <CitySimulator 
                 enableMouseControl={enableMouseControl}
                 moveDronePosY={moveDronePosY}
                 moveDroneNegY={moveDroneNegY}
@@ -119,4 +119,4 @@ const DroneSpaceSimulator = () => {
     );
 };
 
-export default DroneSpaceSimulator;
+export default DroneCitySimulator;

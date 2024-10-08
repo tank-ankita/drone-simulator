@@ -5,7 +5,7 @@ import { OrbitControls, Stars } from "@react-three/drei";
 import * as THREE from 'three';
 import { useFrame } from "@react-three/fiber";
 import { Earth }  from './Earth'
-import { Drone }  from './Drone'
+import { Drone }  from '../../../components/drone/Drone'
 import PropTypes from 'prop-types';
 
 import '../../../css/space.css'
