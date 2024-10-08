@@ -46,7 +46,7 @@ export const Drone = ({
   const { camera } = useThree(); 
 
   const [path, setPath] = useState([new THREE.Vector3(0, 0, 0)]); 
-  const droneSpeep = 0.05
+  let droneSpeed = 0.05
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -75,16 +75,16 @@ export const Drone = ({
     const leftDirection = new THREE.Vector3(1, 0, 0).applyQuaternion(droneRef.current.quaternion); // Apply current drone rotation
     const rightDirection = new THREE.Vector3(-1, 0, 0).applyQuaternion(droneRef.current.quaternion); // Apply current drone rotation
 
-    if (keys.current.w) velocity.current.add(forwardDirection.multiplyScalar(droneSpeep)); // Forward
-    if (keys.current.s) velocity.current.add(backwardDirection.multiplyScalar(droneSpeep)); // Backward
-    if (keys.current.a) velocity.current.add(leftDirection.multiplyScalar(droneSpeep)); // left
-    if (keys.current.d) velocity.current.add(rightDirection.multiplyScalar(droneSpeep)); // right
+    if (keys.current.w) velocity.current.add(forwardDirection.multiplyScalar(droneSpeed)); // Forward
+    if (keys.current.s) velocity.current.add(backwardDirection.multiplyScalar(droneSpeed)); // Backward
+    if (keys.current.a) velocity.current.add(leftDirection.multiplyScalar(droneSpeed)); // left
+    if (keys.current.d) velocity.current.add(rightDirection.multiplyScalar(droneSpeed)); // right
 
     if (keys.current.z) droneRef.current.rotation.y += THREE.MathUtils.degToRad(1); // Rotate left
     if (keys.current.c) droneRef.current.rotation.y -= THREE.MathUtils.degToRad(1); // Rotate right
 
-    if (keys.current.u) velocity.current.y += droneSpeep; // Up
-    if (keys.current.p) velocity.current.y -= droneSpeep; // Down
+    if (keys.current.u) velocity.current.y += droneSpeed; // Up
+    if (keys.current.p) velocity.current.y -= droneSpeed; // Down
 
     droneRef.current.position.add(velocity.current);
 
@@ -174,7 +174,7 @@ export const Drone = ({
     if (moveDroneNegX) moveNegX(moveDroneNegX);
     if (rotate) rotateDrone(rotate);
     if (waitTime) createWait(waitTime);
-    if (speed) droneSpeep = speed;
+    if (speed) droneSpeed = speed;
 
     updateDroneMovement();
   });
