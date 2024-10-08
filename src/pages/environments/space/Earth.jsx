@@ -6,6 +6,16 @@ import { useFrame } from "@react-three/fiber"
 import { useGLTF } from "@react-three/drei"
 import { useMemo, useRef } from "react"
 
+// Planet	Radius 	Distance from Sun
+// Mercury	2,440	57.9	
+// Venus	6,052	108.2	
+// Earth	6,371	149.6	
+// Mars	    3,390	227.9	
+// Jupiter	69,911	778.5	
+// Saturn	58,232	1,434	
+// Uranus	25,362	2,871	
+// Neptune	24,622	4,495	
+
 export const Earth = () => {
     const earthRef = useRef();
     useFrame(() => {
@@ -17,8 +27,8 @@ export const Earth = () => {
 
     return (
         <group>
-            <mesh ref={earthRef} position={[0, 0, 30]}>
-                <sphereGeometry args={[2, 100, 100]} />
+            <mesh ref={earthRef} position={[0, 0, 149.6]}>
+                <sphereGeometry args={[6, 100, 100]} />
                 <meshStandardMaterial map={earthTexture} />
             </mesh>
             <ISS earthRef={earthRef}/>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Galaxy from './Galaxy'
 import '../../../css/space.css'
 
-export const Space = ({
+export const GalaxyContainer = ({
     moveDronePosY,
     moveDroneNegY,
     moveDronePosZ,
@@ -36,7 +36,7 @@ export const Space = ({
   );
 };
 
-Space.propTypes = {
+GalaxyContainer.propTypes = {
   moveDronePosY: PropTypes.any, 
   moveDroneNegY: PropTypes.any,
   moveDronePosZ: PropTypes.any, 

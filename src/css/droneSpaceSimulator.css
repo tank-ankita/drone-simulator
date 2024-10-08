@@ -67,7 +67,7 @@ html, body {
 }
 
 .toolbar {
-  height: 55px;
+  min-height: 60px;
 
   .position {
     padding: 10px;

@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */ 
 import PropTypes from 'prop-types';
-import { Space } from '../../environments/space/Space.jsx' 
+import { GalaxyContainer } from '../../environments/space/GalaxyContainer.jsx' 
 
 function SpaceSimulator({
     moveDronePosY,
@@ -17,7 +17,7 @@ function SpaceSimulator({
   }) {
   return (
     <>
-      <Space 
+      <GalaxyContainer 
         moveDronePosY={moveDronePosY}
         moveDroneNegY={moveDroneNegY}
         moveDronePosZ={moveDronePosZ}

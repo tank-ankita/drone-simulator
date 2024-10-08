@@ -5,6 +5,8 @@ import { OrbitControls, Stars } from "@react-three/drei";
 import * as THREE from 'three';
 import { useFrame } from "@react-three/fiber";
 import { Earth }  from './Earth'
+import { Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Sun }  from './Planets'
+
 import { Drone }  from '../../../components/drone/Drone'
 import PropTypes from 'prop-types';
 
@@ -31,7 +33,16 @@ const Galaxy = ({
             <AnimatedStars/>
             <OrbitControls ref={controlsRef} enablePan={true} enableZoom={true} />
             <ambientLight/>
+            
+            <Mercury/>
+            <Venus/>
             <Earth/>
+            <Mars/>
+            <Jupiter/>
+            <Saturn/>
+            <Uranus/>
+            <Neptune/>
+            <Sun/>
             <Drone 
               controlsRef={controlsRef} 
               moveDronePosY={moveDronePosY}
