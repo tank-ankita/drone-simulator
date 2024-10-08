@@ -11,7 +11,8 @@ function Simulator({
     moveDroneNegX,
     waitTime,
     speed,
-    setDronePosition
+    setDronePosition,
+    rotate
   }) {
   return (
     <>
@@ -25,6 +26,7 @@ function Simulator({
         waitTime={waitTime}
         speed={speed}
         setDronePosition={setDronePosition}
+        rotate={rotate}
       />
     </>
   );
@@ -39,7 +41,8 @@ Simulator.propTypes = {
   moveDroneNegX: PropTypes.any,
   waitTime: PropTypes.any, 
   speed: PropTypes.any,
-  setDronePosition: PropTypes.any
+  setDronePosition: PropTypes.any,
+  rotate: PropTypes.any
 };
 
 export default Simulator;

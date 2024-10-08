@@ -19,7 +19,8 @@ const Galaxy = ({
     moveDroneNegX,
     waitTime,
     speed,
-    setDronePosition
+    setDronePosition,
+    rotate
   }) => {
     const controlsRef = useRef();
 
@@ -47,6 +48,7 @@ const Galaxy = ({
               waitTime={waitTime}
               speed={speed}
               setDronePosition={setDronePosition}
+              rotate={rotate}
             />
         </>
     );
@@ -59,7 +61,6 @@ const AnimatedStars = () => {
         starsRef.current.rotation.x += 0.0001;
         starsRef.current.rotation.y += 0.0001;
         starsRef.current.rotation.z += 0.0001;
-
     })
     
     return<Stars ref={starsRef}/>
@@ -74,7 +75,8 @@ Galaxy.propTypes = {
   moveDroneNegX: PropTypes.any,
   waitTime: PropTypes.any, 
   speed: PropTypes.any,
-  setDronePosition: PropTypes.any
+  setDronePosition: PropTypes.any,
+  rotate: PropTypes.any
 };
   
 

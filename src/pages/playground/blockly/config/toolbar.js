@@ -591,21 +591,19 @@ export const toolbarBlocksDefinitions = (Blockly) => {
 
   Blockly.Blocks['flying_forward_distance'] = {
     init: function() {
-      this.appendDummyInput()
-          .appendField("Flying forward");
+      this.appendDummyInput() // Use DummyInput for both fields
+          .appendField("Flying forward")
+          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Add FieldNumber for distance
+          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT"); // Add Dropdown for units
       
-      this.appendValueInput("DISTANCE")
-          .setCheck("Number")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE")      
-          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT");
-      
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(COLORS.NAVIGATION);
+      this.setPreviousStatement(true, null); // Allow chaining with previous block
+      this.setNextStatement(true, null); // Allow chaining with next block
+      this.setColour(COLORS.NAVIGATION); // Set block color
       this.setTooltip("Command to fly forward a certain distance in inches or cm");
       this.setHelpUrl("");
     }
   };
+  
 
   Blockly.Blocks['flying_forward_time'] = {
     init: function() {
@@ -624,18 +622,12 @@ export const toolbarBlocksDefinitions = (Blockly) => {
 
   Blockly.Blocks['flying_backward_distance'] = {
     init: function() {
-      this.appendDummyInput()
-          .appendField("Fly backward");
-      
-      this.appendValueInput("DISTANCE")
-          .setCheck("Number")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE")      
-          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT");
-      
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
+      this.appendDummyInput() // Use DummyInput for both fields
+        .appendField("Fly backward")
+        .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Add FieldNumber
+        .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT"); // Add Dropdown on the same line
       this.setColour(COLORS.NAVIGATION);
-      this.setTooltip("Command to fly forward a certain distance in inches or cm");
+      this.setTooltip("Command to fly backward a certain distance in inches or cm");
       this.setHelpUrl("");
     }
   };
@@ -656,22 +648,19 @@ export const toolbarBlocksDefinitions = (Blockly) => {
 
   Blockly.Blocks['flying_left_distance'] = {
     init: function() {
-      this.appendDummyInput()
-          .appendField("Fly left");
+      this.appendDummyInput() // Use DummyInput for grouping
+          .appendField("Fly left")
+          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Add FieldNumber for distance
+          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT"); // Add Dropdown for units
       
-      // Numeric input field for specifying the distance
-      this.appendValueInput("DISTANCE")
-          .setCheck("Number")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE")      
-          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT");
-      
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(COLORS.NAVIGATION);
-      this.setTooltip("Command to fly forward a certain distance in inches or cm");
+      this.setPreviousStatement(true, null); // Allow chaining with previous block
+      this.setNextStatement(true, null); // Allow chaining with next block
+      this.setColour(COLORS.NAVIGATION); // Set block color
+      this.setTooltip("Command to fly left a certain distance in inches or cm");
       this.setHelpUrl("");
     }
   };
+  
 
   Blockly.Blocks['flying_left_time'] = {
     init: function() {
@@ -689,21 +678,19 @@ export const toolbarBlocksDefinitions = (Blockly) => {
 
   Blockly.Blocks['flying_right_distance'] = {
     init: function() {
-      this.appendDummyInput()
-          .appendField("Fly right");
-      
-      this.appendValueInput("DISTANCE")
-          .setCheck("Number")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE")      
-          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT");
-      
+      this.appendDummyInput() // Group everything on the same line
+          .appendField("Fly right")
+          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Add numeric input for distance
+          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT"); // Add dropdown for units
+  
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(COLORS.NAVIGATION);
-      this.setTooltip("Command to fly forward a certain distance in inches or cm");
+      this.setTooltip("Command to fly right a certain distance in inches or cm");
       this.setHelpUrl("");
     }
   };
+  
 
   Blockly.Blocks['flying_right_time'] = {
     init: function() {
@@ -721,22 +708,19 @@ export const toolbarBlocksDefinitions = (Blockly) => {
 
   Blockly.Blocks['flying_up_distance'] = {
     init: function() {
-      this.appendDummyInput()
-          .appendField("Fly up");
-      
-      // Numeric input field for specifying the distance
-      this.appendValueInput("DISTANCE")
-          .setCheck("Number")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE")      
-          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT");
-      
+      this.appendDummyInput() // Group everything on the same line
+          .appendField("Fly up")
+          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Add numeric input for distance
+          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT"); // Add dropdown for units
+  
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(COLORS.NAVIGATION);
-      this.setTooltip("Command to fly forward a certain distance in inches or cm");
+      this.setTooltip("Command to fly up a certain distance in inches or cm");
       this.setHelpUrl("");
     }
   };
+  
 
   Blockly.Blocks['flying_up_time'] = {
     init: function() {
@@ -754,22 +738,19 @@ export const toolbarBlocksDefinitions = (Blockly) => {
 
   Blockly.Blocks['flying_down_distance'] = {
     init: function() {
-      this.appendDummyInput()
-          .appendField("Fly down");
-      
-      // Numeric input field for specifying the distance
-      this.appendValueInput("DISTANCE")
-          .setCheck("Number")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE")      
-          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT");
-      
+      this.appendDummyInput() // Group everything on the same line
+          .appendField("Fly down")
+          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Add numeric input for distance
+          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT"); // Add dropdown for units
+  
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(COLORS.NAVIGATION);
-      this.setTooltip("Command to fly forward a certain distance in inches or cm");
+      this.setTooltip("Command to fly down a certain distance in inches or cm");
       this.setHelpUrl("");
     }
   };
+  
 
   Blockly.Blocks['flying_down_time'] = {
     init: function() {
@@ -793,7 +774,8 @@ export const toolbarBlocksDefinitions = (Blockly) => {
           .appendField("y")
           .appendField(new Blockly.FieldNumber(0, 0, null), "y")
           .appendField("z")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "z");
+          .appendField(new Blockly.FieldNumber(0, 0, null), "z")
+          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT"); // Add dropdown for units
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(COLORS.NAVIGATION);
@@ -804,122 +786,105 @@ export const toolbarBlocksDefinitions = (Blockly) => {
 
   Blockly.Blocks['arc_left'] = {
     init: function() {
-      this.appendDummyInput()
-          .appendField("arc left");
-      
-      // Numeric input field for specifying the distance
-      this.appendValueInput("DEGREE")
-          .setCheck("Number")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "DEGREE")
-          .appendField(" degrees with") 
-          .setCheck("Number")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "Distance")
-          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT")
-          .appendField("radius");
-
+      this.appendDummyInput() // Group everything on the same line
+          .appendField("Arc left")
+          .appendField(new Blockly.FieldNumber(0, 0, null), "DEGREE") // Degrees input
+          .appendField(" degrees with ") 
+          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Distance input
+          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT") // Unit dropdown
+          .appendField(" radius");
+  
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(COLORS.NAVIGATION);
-      this.setTooltip("Command to fly forward a certain distance in inches or cm");
+      this.setTooltip("Command to arc left a certain number of degrees and distance with radius in inches or cm");
       this.setHelpUrl("");
     }
   };
 
   Blockly.Blocks['arc_right'] = {
     init: function() {
-      this.appendDummyInput()
-          .appendField("arc right");
-      
-      // Numeric input field for specifying the distance
-      this.appendValueInput("DEGREE")
-          .setCheck("Number")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "DEGREE")
-          .appendField(" degrees with") 
-          .setCheck("Number")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "Distance")
-          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT")
-          .appendField("radius");
-
+      this.appendDummyInput() // Group everything on the same line
+          .appendField("Arc right")
+          .appendField(new Blockly.FieldNumber(0, 0, null), "DEGREE") // Degrees input
+          .appendField(" degrees with ") 
+          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Distance input
+          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT") // Unit dropdown
+          .appendField(" radius");
+  
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(COLORS.NAVIGATION);
-      this.setTooltip("Command to fly forward a certain distance in inches or cm");
+      this.setTooltip("Command to arc right a certain number of degrees and distance with radius in inches or cm");
       this.setHelpUrl("");
     }
   };
+  
 
   Blockly.Blocks['circle_left'] = {
     init: function() {
-      this.appendDummyInput()
-          .appendField("Circle left with");
-      
-      // Numeric input field for specifying the distance
-      this.appendValueInput("DISTANCE")
-          .setCheck("Number")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE")      
-          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT")
-          .appendField("radius");
-
+      this.appendDummyInput() // Group everything on the same line
+          .appendField("Circle left with ")
+          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Distance input
+          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT") // Unit dropdown
+          .appendField(" radius");
+  
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(COLORS.NAVIGATION);
-      this.setTooltip("Command to fly forward a certain distance in inches or cm");
+      this.setTooltip("Command to fly in a circle to the left with a given radius in inches or cm");
       this.setHelpUrl("");
     }
   };
+  
 
   Blockly.Blocks['circle_right'] = {
     init: function() {
-      this.appendDummyInput()
-          .appendField("Circle right with");
-      
-      // Numeric input field for specifying the distance
-      this.appendValueInput("DISTANCE")
-          .setCheck("Number")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE")      
-          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT")
-          .appendField("radius");
-
+      this.appendDummyInput() // Group everything on the same line
+          .appendField("Circle right with ")
+          .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Distance input
+          .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT") // Unit dropdown
+          .appendField(" radius");
+  
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(COLORS.NAVIGATION);
-      this.setTooltip("Command to fly forward a certain distance in inches or cm");
+      this.setTooltip("Command to fly in a circle to the right with a given radius in inches or cm");
       this.setHelpUrl("");
     }
   };
+  
 
   Blockly.Blocks['yaw_left'] = {
     init: function() {
-      this.appendDummyInput()
-          .appendField("yaw left")
-          this.appendValueInput("degreee")
-          .setCheck("Number")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "degrees")  
-          .appendField("degree");
+      this.appendDummyInput() // Group everything on the same line
+          .appendField("Yaw left")
+          .appendField(new Blockly.FieldNumber(0, 0, null), "DEGREE") // Degrees input
+          .appendField(" degrees");
+      
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(COLORS.NAVIGATION);
-      this.setTooltip("Command to set wait time for drone");
+      this.setTooltip("Command to yaw left by a certain number of degrees");
       this.setHelpUrl("");
     }
   };
 
   Blockly.Blocks['yaw_right'] = {
     init: function() {
-      this.appendDummyInput()
-          .appendField("yaw right")
-          this.appendValueInput("degreee")
-          .setCheck("Number")
-          .appendField(new Blockly.FieldNumber(0, 0, null), "degrees")  
-          .appendField("degree");
+      this.appendDummyInput() // Group everything on the same line
+          .appendField("Yaw right")
+          .appendField(new Blockly.FieldNumber(0, 0, null), "DEGREE") // Degrees input
+          .appendField(" degrees");
+      
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(COLORS.NAVIGATION);
-      this.setTooltip("Command to set wait time for drone");
+      this.setTooltip("Command to yaw right by a certain number of degrees");
       this.setHelpUrl("");
     }
   };
-
+  
   Blockly.Blocks['land'] = {
     init: function() {
       this.appendDummyInput()

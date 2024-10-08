@@ -7,18 +7,19 @@ import PropTypes from 'prop-types';
 import { useGLTF, Line } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useMemo, useRef, useEffect, useState } from "react";
-import {  moveDroneUp, moveDroneDown, moveDroneForward, moveDroneBackward, moveDroneRight, createWait } from './config/droneMovement.js';
+import { createWait } from './config/droneMovement.js';
 
-const DISTANCE_CM_OFFSET = 0.1;
 const DISTANCE_INCHES_OFFSET = 0.393701;
-
+const SECONDS = 'SECONDS';
+const CIRCLE_LEFT = "CIRCLE_LEFT";
+const CIRCLE_RIGHT = 'CIRCLE_RIGHT';
+const ARC_RIGHT = 'ARC_RIGHT';
+const ARC_LEFT ='ARC_LEFT';
 const INCHES = "INCHES";
-const DISTANCE = {
-  'INCHES': 0.393701,
-  'CM': 1
-}
+const LEFT = 'LEFT';
+const RIGHT = 'RIGHT';
+
 export const Drone = ({ 
-  controlsRef, 
   moveDronePosY,
   moveDroneNegY,
   moveDronePosZ,
@@ -27,7 +28,8 @@ export const Drone = ({
   moveDroneNegX,
   waitTime,
   speed,
-  setDronePosition
+  setDronePosition,
+  rotate
 }) => {
 
   const memoizedDrone = useMemo(() => { return useGLTF('assets/models/drone.glb'); }, []);
@@ -39,8 +41,6 @@ export const Drone = ({
   const { camera } = useThree(); 
 
   const [path, setPath] = useState([new THREE.Vector3(0, 0, 0)]); 
-  const [targetPosition, setTargetPosition] = useState(null);
-  const [targetRotation, setTargetRotation] = useState(null);
 
   const allowDroneCamera = true;
   const droneSpeep = 0.05
@@ -106,25 +106,75 @@ export const Drone = ({
       zRot: droneRef.current.rotation.z });
   };
 
-  const moveXLeft = ( [distance, unit]) => {
-    const newPosition = unit == INCHES ? distance * DISTANCE_INCHES_OFFSET : distance; 
-    const distanceInThreeJsUnits = (newPosition / 100); 
-    const leftDirection = new THREE.Vector3(1, 0, 0).applyQuaternion(droneRef.current.quaternion); 
-    droneRef.current.position.add(leftDirection.multiplyScalar(distanceInThreeJsUnits)); 
+  const rotateDrone = (value) => {
+    const [direction, degrees, radius, unit] = value;
+    const radians = THREE.MathUtils.degToRad(degrees/60);
+
+    if(direction == CIRCLE_LEFT || direction == ARC_LEFT) {  
+      droneRef.current.rotation.y += radians;
+      moveDrone(new THREE.Vector3(0, 0, 1), [radius, unit]);
+    }
+
+    if(direction == CIRCLE_RIGHT || direction == ARC_RIGHT) {
+      droneRef.current.rotation.y -= radians;
+      moveDrone(new THREE.Vector3(0, 0, 1), [radius, unit]);
+    }
+
+    if (direction === LEFT) droneRef.current.rotation.y += radians;
+    if (direction === RIGHT) droneRef.current.rotation.y -= radians; 
   };
+  
+
+  const moveContinuous = (directionVector, seconds) => {
+    const distancePerFrame = 0.001;
+    const frameTime = 1000 / 60; 
+    let elapsedTime = 0;
+    const totalTime = seconds * 1000; 
+    const direction = directionVector.applyQuaternion(droneRef.current.quaternion); 
+    
+    const moveStep = () => {
+      droneRef.current.position.add(direction.clone().multiplyScalar(distancePerFrame));
+      elapsedTime += frameTime;
+      if (elapsedTime < totalTime) setTimeout(moveStep, frameTime); 
+    };
+    moveStep();
+  };
+  
+  const moveDrone = (directionVector, [distance, unit]) => {
+    const newPosition = unit === INCHES ? distance * DISTANCE_INCHES_OFFSET : distance;
+    const distanceInThreeJsUnits = newPosition / 100;
+    
+    const direction = directionVector.applyQuaternion(droneRef.current.quaternion);
+    droneRef.current.position.add(direction.multiplyScalar(distanceInThreeJsUnits));
+  };
+  
+  // Movement functions using the generalized moveDrone function
+  const moveNegX = (params) => {
+    //fix this
+    if(params[1] == SECONDS) moveContinuous(new THREE.Vector3(1, 0, 0))
+    else moveDrone(new THREE.Vector3(1, 0, 0),  params)
+  } 
+    
+  const movePosX = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(-1, 0, 0), params[0]) : moveDrone(new THREE.Vector3(-1, 0, 0), params);
+  const movePosY = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(0, 1, 0),  params[0]) : moveDrone(new THREE.Vector3(0, 1, 0),  params);
+  const moveNegY = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(0, -1, 0), params[0]) : moveDrone(new THREE.Vector3(0, -1, 0), params);
+  const movePosZ = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(0, 0, 1), params[0]) : moveDrone(new THREE.Vector3(0, 0, 1), params);
+  const moveNegZ = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(0, 0, -1), params[0]) : moveDrone(new THREE.Vector3(0, 0, -1), params);
+  
 
   useFrame(() => {
     if (!droneRef.current) return;
 
     // Custom key-based movements
-    if (moveDronePosY) moveDroneUp(moveDronePosY, keys);
-    if (moveDroneNegY) moveDroneDown(moveDroneNegY, keys);
-    if (moveDronePosZ) moveDroneForward(moveDronePosZ, keys);
-    if (moveDroneNegZ) moveDroneBackward(moveDroneNegZ, keys);
-    if (moveDronePosX) moveDroneRight(moveDronePosX, keys);
-    if (moveDroneNegX) moveXLeft(moveDroneNegX);
-    
+    if (moveDronePosY) movePosY(moveDronePosY);
+    if (moveDroneNegY) moveNegY(moveDroneNegY);
+    if (moveDronePosZ) movePosZ(moveDronePosZ);
+    if (moveDroneNegZ) moveNegZ(moveDroneNegZ);
+    if (moveDronePosX) movePosX(moveDronePosX);
+    if (moveDroneNegX) moveNegX(moveDroneNegX);
+    if (rotate) rotateDrone(rotate);
     if (waitTime) createWait(waitTime);
+    if (speed) droneSpeep = speed;
 
     updateDroneMovement();
   });
@@ -158,5 +208,6 @@ Drone.propTypes = {
   moveDroneNegX: PropTypes.any,
   controlsRef: PropTypes.any,
   waitTime: PropTypes.any, 
-  speed: PropTypes.any
+  speed: PropTypes.any,
+  rotate: PropTypes.any
 };

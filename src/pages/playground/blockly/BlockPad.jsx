@@ -23,6 +23,7 @@ const BlockPad = ({
   moveDroneNegZ,
   moveDronePosX,
   moveDroneNegX,
+  rotate,
   waitTime,
   speed,
 }) => {
@@ -42,11 +43,13 @@ const BlockPad = ({
   const flyForward = (distance, measurement) => { moveDronePosZ([distance, measurement]); }
   const flyBackward = (distance, measurement) => { moveDroneNegZ([distance, measurement]); }
   
-  const flyLeft = (distance, measurement) => { moveDroneNegX([distance, measurement]); }
+  const flyLeft = (distance, measurement, direction) => { moveDroneNegX([distance, measurement, direction]); }
   const flyRight = (distance, measurement) => { moveDronePosX([distance, measurement]); }
 
   const setSpeed = (value) => { speed(value) }
   const setWaitTime = (value) => { waitTime(value) }
+
+  const rotateDrone = (direction, degree, radius, unit) => { rotate([direction, degree, radius, unit]) }
 
   const runSimulator = () => {
     var code = javascriptGenerator.workspaceToCode(Blockly.getMainWorkspace().current);
@@ -102,7 +105,8 @@ BlockPad.propTypes = {
   moveDronePosX: PropTypes.any, 
   moveDroneNegX: PropTypes.any,
   waitTime: PropTypes.any, 
-  speed: PropTypes.any
+  speed: PropTypes.any,
+  rotate: PropTypes.any
 };
 
 export default BlockPad;

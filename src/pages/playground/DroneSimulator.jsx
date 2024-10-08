@@ -14,6 +14,7 @@ const DroneSimulator = () => {
   const [moveDroneNegX, setDroneNegX] = useState(null);
   const [speed, setSpeed] = useState(null);
   const [waitTime, setWaitTime] = useState(null);
+  const [rotate, setRotate] = useState(null); 
 
   const [dronePosition, setDronePosition] = useState({ x: 0, y: 0, z: 0 });
 
@@ -52,6 +53,11 @@ const DroneSimulator = () => {
     setTimeout(() => setSpeed(null), 1000);
   };
 
+  const rotateDrone = (value) => {
+    setRotate(value);
+    setTimeout(() => setRotate(null), 1000);
+  }
+
   const bufferTime = (value) => {
     setWaitTime(value);
     setTimeout(() => setWaitTime(null), 1000);
@@ -62,9 +68,9 @@ const DroneSimulator = () => {
   }
 
   const getRotation = (dronePosition) => {
-    let X = roundNumber(dronePosition.xRot);
-    let Y = roundNumber(dronePosition.yRot);
-    let Z = roundNumber(dronePosition.zRot);
+    let X = roundNumber(dronePosition.xRot)*60;
+    let Y = roundNumber(dronePosition.yRot)*60;
+    let Z = roundNumber(dronePosition.zRot)*60;
 
     return `Xr: ${X} Degree   Yr: ${Y} Degree  Zr: ${Z} Degree`;
   }
@@ -88,6 +94,7 @@ const DroneSimulator = () => {
                 moveDroneNegZ={moveDroneNegativeZ}
                 moveDronePosX={moveDronePositiveX}
                 moveDroneNegX={moveDroneNegativeX}
+                rotate={rotateDrone}
                 speed={droneSpeed}
                 waitTime={bufferTime}
               />
@@ -105,6 +112,7 @@ const DroneSimulator = () => {
                 moveDroneNegZ={moveDroneNegZ}
                 moveDronePosX={moveDronePosX}
                 moveDroneNegX={moveDroneNegX}
+                rotate={rotate}
                 speed={speed}
                 waitTime={waitTime}
                 setDronePosition={setDronePosition}

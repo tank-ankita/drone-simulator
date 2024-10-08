@@ -36,7 +36,7 @@ export const toolbarFunctionHandler = () => {
     // flying_forward_time
     javascriptGenerator.forBlock['flying_forward_time'] = function(block) {
         const fly_forward_time = block.getFieldValue('SECONDS')
-        return `flyForward(${fly_forward_time}, 'CM');`;
+        return `flyForward(${fly_forward_time}, 'SECONDS');`;
     } 
 
     // flying_backwards_distance
@@ -121,5 +121,69 @@ export const toolbarFunctionHandler = () => {
         return `setWaitTime(${wait_time});`;
     } 
 
+    // fly
+    javascriptGenerator.forBlock['fly'] = function(block) {
+        const x_cordinate = block.getFieldValue('x')
+        const y_cordinate = block.getFieldValue('y')
+        const z_cordinate = block.getFieldValue('z')
+        const unit = block.getFieldValue('UNIT');
+
+        let fucntionString = ""
+        if(x_cordinate > 0) fucntionString += `flyRight(${x_cordinate}, '${unit}'); `
+        if(y_cordinate > 0) fucntionString += `flyUp(${y_cordinate}, '${unit}'); `
+        if(z_cordinate > 0) fucntionString += `flyForward(${z_cordinate}, '${unit}'); `
+
+        if(x_cordinate < 0) fucntionString += `flyLeft(${x_cordinate}, '${unit}'); `
+        if(y_cordinate < 0) fucntionString += `flyDown(${y_cordinate}, '${unit}'); `
+        if(z_cordinate < 0) fucntionString += `flyBackward(${z_cordinate}, '${unit}'); `
+        return fucntionString;
+    } 
+
+    // direction, degree, radius, unit 
+    // circle_left
+    javascriptGenerator.forBlock['circle_left'] = function(block) {
+        const radius = block.getFieldValue('DISTANCE');
+        const unit = block.getFieldValue('UNIT');
+
+        return `rotateDrone('CIRCLE_LEFT', 360, ${radius}, '${unit}'); `;
+    } 
+
+    // circle_right
+    javascriptGenerator.forBlock['circle_right'] = function(block) {
+        const radius = block.getFieldValue('DISTANCE');
+        const unit = block.getFieldValue('UNIT');
+
+        return `rotateDrone('CIRCLE_RIGHT', 360, ${radius}, '${unit}'); `;
+    } 
+
+    // yaw_left
+    javascriptGenerator.forBlock['yaw_left'] = function(block) {
+        const degree = block.getFieldValue('DEGREE');
+        return `rotateDrone('LEFT', ${degree}, null, null); `;
+    } 
+
+    // yaw_right
+    javascriptGenerator.forBlock['yaw_right'] = function(block) {
+        const degree = block.getFieldValue('DEGREE');
+        return `rotateDrone('RIGHT', ${degree}, null, null); `;
+    } 
+
+    // arc_left
+    javascriptGenerator.forBlock['arc_left'] = function(block) {
+        const degree = block.getFieldValue('DEGREE');
+        const distance = block.getFieldValue('DISTANCE');
+        const unit = block.getFieldValue('UNIT');
+
+        return `rotateDrone('ARC_LEFT', ${degree}, ${distance}, '${unit}'); `;
+    } 
+
+    // arc_right
+    javascriptGenerator.forBlock['arc_right'] = function(block) {
+        const degree = block.getFieldValue('DEGREE');
+        const distance = block.getFieldValue('DISTANCE');
+        const unit = block.getFieldValue('UNIT');
+        
+        return `rotateDrone('ARC_RIGHT', ${degree}, ${distance}, '${unit}'); `;
+    } 
 }
 
