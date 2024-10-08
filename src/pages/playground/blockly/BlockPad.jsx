@@ -10,7 +10,7 @@ import 'blockly/javascript';
 import 'blockly/blocks';
 
 import { toolbarConfig, toolbarBlocksDefinitions } from './config/toolbar.js'
-import ActionButton from './ActionButton';
+import ActionButton from '../../../components/ActionButton.jsx';
 import  Theme  from './config/theme.js';
 import "../../../css/blockpad.css";
 
@@ -86,9 +86,9 @@ const BlockPad = ({
   return (    
     <div className='blockpad-wrapper'>
       <div className='button-bar'>
-        <ActionButton onClick={clearWorkspace} title="Clear Workspace" green></ActionButton>
-        <ActionButton onClick={runSimulator} title="Launch Simulation"></ActionButton>
-        <ActionButton onClick={reloadPage} title="Reset Simulation">/</ActionButton>
+        <ActionButton onClick={clearWorkspace} title="Clear Workspace" green medium></ActionButton>
+        <ActionButton onClick={runSimulator} title="Launch Simulation" medium></ActionButton>
+        <ActionButton onClick={reloadPage} title="Reset Simulation" medium>/</ActionButton>
         <label className="toggle-switch">
           <input type="checkbox" checked={toggleValue} onChange={handleToggleChange}/>
           <span className="slider">Enable Mouse Control</span>

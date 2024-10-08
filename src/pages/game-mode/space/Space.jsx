@@ -2,9 +2,9 @@ import { Canvas } from "@react-three/fiber";
 import PropTypes from 'prop-types';
 
 import Galaxy from './Galaxy'
-import '../../css/gameMode.css'
+import '../../../css/space.css'
 
-export const GameMode = ({
+export const Space = ({
     moveDronePosY,
     moveDroneNegY,
     moveDronePosZ,
@@ -36,7 +36,7 @@ export const GameMode = ({
   );
 };
 
-GameMode.propTypes = {
+Space.propTypes = {
   moveDronePosY: PropTypes.any, 
   moveDroneNegY: PropTypes.any,
   moveDronePosZ: PropTypes.any, 

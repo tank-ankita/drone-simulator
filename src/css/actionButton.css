@@ -5,6 +5,7 @@
     border: none;
     border-radius: 5px; /* Optional: rounded corners */
     cursor: pointer;
+    font-family: monospace;
   }
   
   .action-button:hover {

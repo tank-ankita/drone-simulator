@@ -8,7 +8,7 @@ import { Earth }  from './Earth'
 import { Drone }  from './Drone'
 import PropTypes from 'prop-types';
 
-import '../../css/gameMode.css'
+import '../../../css/space.css'
 
 const Galaxy = ({ 
     moveDronePosY,

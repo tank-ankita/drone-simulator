@@ -9,15 +9,17 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useMemo, useRef, useEffect, useState } from "react";
 import { createWait } from './config/droneMovement.js';
 
+
+
 const DISTANCE_INCHES_OFFSET = 0.393701;
-const SECONDS = 'SECONDS';
-const CIRCLE_LEFT = "CIRCLE_LEFT";
 const CIRCLE_RIGHT = 'CIRCLE_RIGHT';
+const CIRCLE_LEFT = "CIRCLE_LEFT";
 const ARC_RIGHT = 'ARC_RIGHT';
 const ARC_LEFT ='ARC_LEFT';
+const SECONDS = 'SECONDS';
 const INCHES = "INCHES";
-const LEFT = 'LEFT';
 const RIGHT = 'RIGHT';
+const LEFT = 'LEFT';
 
 export const Drone = ({ 
   moveDronePosY,
@@ -33,8 +35,10 @@ export const Drone = ({
   enableMouseControl
 }) => {
 
+  const isGameMode = window.location.href.includes('game-mode');
+  const canMoveInArena = isGameMode || enableMouseControl;
+  
   const memoizedDrone = useMemo(() => { return useGLTF('assets/models/drone.glb'); }, []);
-
   const droneRef = useRef();
   const velocity = useRef(new THREE.Vector3(0, 0, 0));
   const keys = useRef({ w: false, a: false, s: false, d: false, u: false, p: false, t: false });
@@ -82,11 +86,10 @@ export const Drone = ({
     if (keys.current.u) velocity.current.y += droneSpeep; // Up
     if (keys.current.p) velocity.current.y -= droneSpeep; // Down
 
-    // Interpolate (lerp) the current position towards the new position
     droneRef.current.position.add(velocity.current);
 
     // Update camera to follow drone
-    if (!enableMouseControl) {
+    if (!canMoveInArena) {
       const cameraOffset = new THREE.Vector3(0, 1, -5); // Camera position relative to the drone
       cameraOffset.applyQuaternion(droneRef.current.quaternion); // Apply the drone's rotation to the camera
       camera.position.copy(droneRef.current.position.clone().add(cameraOffset));
@@ -96,13 +99,15 @@ export const Drone = ({
     // Update the path the drone follows
     const currentPosition = droneRef.current.position.clone();
     setPath((prevPath) => [...prevPath, currentPosition]);
-    setDronePosition({ 
+    if(setDronePosition) {
+      setDronePosition({ 
       xPos: droneRef.current.position.x, 
       yPos: droneRef.current.position.y, 
       zPos: droneRef.current.position.z, 
       xRot: droneRef.current.rotation.x,
       yRot: droneRef.current.rotation.y, 
       zRot: droneRef.current.rotation.z });
+    }
   };
 
   const rotateDrone = (value) => {

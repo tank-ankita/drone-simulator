@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unknown-property */ 
 import PropTypes from 'prop-types';
-import { GameMode } from '../../game-mode/GameMode.jsx' 
+import { Space } from '../../game-mode/space/Space.jsx' 
 
-function Simulator({
+function SpaceSimulator({
     moveDronePosY,
     moveDroneNegY,
     moveDronePosZ,
@@ -17,7 +17,7 @@ function Simulator({
   }) {
   return (
     <>
-      <GameMode 
+      <Space 
         moveDronePosY={moveDronePosY}
         moveDroneNegY={moveDroneNegY}
         moveDronePosZ={moveDronePosZ}
@@ -34,7 +34,7 @@ function Simulator({
   );
 }
 
-Simulator.propTypes = {
+SpaceSimulator.propTypes = {
   enableMouseControl:PropTypes.any,
   setDronePosition: PropTypes.any,
   moveDronePosY: PropTypes.any, 
@@ -48,4 +48,4 @@ Simulator.propTypes = {
   rotate: PropTypes.any,
 };
 
-export default Simulator;
+export default SpaceSimulator;
