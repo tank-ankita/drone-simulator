@@ -549,7 +549,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['takeoff_after_seconds'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("Take off after")
+          .appendField("take off after")
           .appendField(new Blockly.FieldNumber(0, 0, 60), "SECONDS")
           .appendField("seconds");
       this.setPreviousStatement(true, null);
@@ -592,7 +592,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['flying_forward_distance'] = {
     init: function() {
       this.appendDummyInput() // Use DummyInput for both fields
-          .appendField("Flying forward")
+          .appendField("fly forward")
           .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Add FieldNumber for distance
           .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT"); // Add Dropdown for units
       
@@ -608,7 +608,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['flying_forward_time'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("flying_forward")
+          .appendField("fly forward")
           .appendField(new Blockly.FieldNumber(0, 0, 60), "SECONDS")
           .appendField("seconds");
       this.setPreviousStatement(true, null);
@@ -623,7 +623,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['flying_backward_distance'] = {
     init: function() {
       this.appendDummyInput() // Use DummyInput for both fields
-        .appendField("Fly backward")
+        .appendField("fly backward")
         .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Add FieldNumber
         .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT"); // Add Dropdown on the same line
       this.setColour(COLORS.NAVIGATION);
@@ -635,7 +635,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['flying_backward_time'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("flying_backward")
+          .appendField("fly backward")
           .appendField(new Blockly.FieldNumber(0, 0, 60), "SECONDS")
           .appendField("seconds");
       this.setPreviousStatement(true, null);
@@ -649,7 +649,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['flying_left_distance'] = {
     init: function() {
       this.appendDummyInput() // Use DummyInput for grouping
-          .appendField("Fly left")
+          .appendField("fly left")
           .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Add FieldNumber for distance
           .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT"); // Add Dropdown for units
       
@@ -665,7 +665,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['flying_left_time'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("flying_left")
+          .appendField("fly left")
           .appendField(new Blockly.FieldNumber(0, 0, 60), "SECONDS")
           .appendField("seconds");
       this.setPreviousStatement(true, null);
@@ -679,7 +679,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['flying_right_distance'] = {
     init: function() {
       this.appendDummyInput() // Group everything on the same line
-          .appendField("Fly right")
+          .appendField("fly right")
           .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Add numeric input for distance
           .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT"); // Add dropdown for units
   
@@ -695,7 +695,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['flying_right_time'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("flying_right")
+          .appendField("fly right")
           .appendField(new Blockly.FieldNumber(0, 0, 60), "SECONDS")
           .appendField("seconds");
       this.setPreviousStatement(true, null);
@@ -709,7 +709,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['flying_up_distance'] = {
     init: function() {
       this.appendDummyInput() // Group everything on the same line
-          .appendField("Fly up")
+          .appendField("fly up")
           .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Add numeric input for distance
           .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT"); // Add dropdown for units
   
@@ -725,7 +725,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['flying_up_time'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("flying_up")
+          .appendField("fly up")
           .appendField(new Blockly.FieldNumber(0, 0, 60), "SECONDS")
           .appendField("seconds");
       this.setPreviousStatement(true, null);
@@ -739,7 +739,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['flying_down_distance'] = {
     init: function() {
       this.appendDummyInput() // Group everything on the same line
-          .appendField("Fly down")
+          .appendField("fly down")
           .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Add numeric input for distance
           .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT"); // Add dropdown for units
   
@@ -755,7 +755,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['flying_down_time'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("flying_down")
+          .appendField("fly down")
           .appendField(new Blockly.FieldNumber(0, 0, 60), "SECONDS")
           .appendField("seconds");
       this.setPreviousStatement(true, null);
@@ -787,7 +787,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['arc_left'] = {
     init: function() {
       this.appendDummyInput() // Group everything on the same line
-          .appendField("Arc left")
+          .appendField("arc left")
           .appendField(new Blockly.FieldNumber(0, 0, null), "DEGREE") // Degrees input
           .appendField(" degrees with ") 
           .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Distance input
@@ -805,7 +805,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['arc_right'] = {
     init: function() {
       this.appendDummyInput() // Group everything on the same line
-          .appendField("Arc right")
+          .appendField("arc right")
           .appendField(new Blockly.FieldNumber(0, 0, null), "DEGREE") // Degrees input
           .appendField(" degrees with ") 
           .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Distance input
@@ -824,7 +824,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['circle_left'] = {
     init: function() {
       this.appendDummyInput() // Group everything on the same line
-          .appendField("Circle left with ")
+          .appendField("circle left with ")
           .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Distance input
           .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT") // Unit dropdown
           .appendField(" radius");
@@ -841,7 +841,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['circle_right'] = {
     init: function() {
       this.appendDummyInput() // Group everything on the same line
-          .appendField("Circle right with ")
+          .appendField("circle right with ")
           .appendField(new Blockly.FieldNumber(0, 0, null), "DISTANCE") // Distance input
           .appendField(new Blockly.FieldDropdown([["inches", "INCHES"], ["cm", "CM"]]), "UNIT") // Unit dropdown
           .appendField(" radius");
@@ -858,7 +858,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['yaw_left'] = {
     init: function() {
       this.appendDummyInput() // Group everything on the same line
-          .appendField("Yaw left")
+          .appendField("yaw left")
           .appendField(new Blockly.FieldNumber(0, 0, null), "DEGREE") // Degrees input
           .appendField(" degrees");
       
@@ -873,7 +873,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['yaw_right'] = {
     init: function() {
       this.appendDummyInput() // Group everything on the same line
-          .appendField("Yaw right")
+          .appendField("yaw right")
           .appendField(new Blockly.FieldNumber(0, 0, null), "DEGREE") // Degrees input
           .appendField(" degrees");
       
@@ -900,7 +900,7 @@ export const toolbarBlocksDefinitions = (Blockly) => {
   Blockly.Blocks['land_for_seconds'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("Land for")
+          .appendField("land for ")
           .appendField(new Blockly.FieldNumber(0, 0, 60), "SECONDS")
           .appendField("seconds then takeoff");
       this.setPreviousStatement(true, null);

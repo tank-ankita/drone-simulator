@@ -20,15 +20,10 @@ const Galaxy = ({
     waitTime,
     speed,
     setDronePosition,
-    rotate
+    rotate,
+    enableMouseControl
   }) => {
     const controlsRef = useRef();
-
-    useFrame(() => {
-        // if (controlsRef.current) {
-        //   controlsRef.current.update(); // Ensure the controls stay updated
-        // }
-      });
 
     return (
         <>
@@ -49,6 +44,7 @@ const Galaxy = ({
               speed={speed}
               setDronePosition={setDronePosition}
               rotate={rotate}
+              enableMouseControl={enableMouseControl}
             />
         </>
     );
@@ -76,7 +72,8 @@ Galaxy.propTypes = {
   waitTime: PropTypes.any, 
   speed: PropTypes.any,
   setDronePosition: PropTypes.any,
-  rotate: PropTypes.any
+  rotate: PropTypes.any,
+  enableMouseControl: PropTypes.any
 };
   
 

@@ -50,7 +50,7 @@ export const toolbarFunctionHandler = () => {
     // flying_backwards_time
     javascriptGenerator.forBlock['flying_backward_time'] = function(block) {
         const fly_forward_time = block.getFieldValue('SECONDS')
-        return `flyBackward(${fly_forward_time}, 'CM');`;
+        return `flyBackward(${fly_forward_time}, 'SECONDS');`;
     } 
 
     // flying_left_distance
@@ -64,7 +64,7 @@ export const toolbarFunctionHandler = () => {
     // flying_left_time
     javascriptGenerator.forBlock['flying_left_time'] = function(block) {
         const fly_left_time = block.getFieldValue('SECONDS')
-        return `flyLeft(${fly_left_time},'CM');`;
+        return `flyLeft(${fly_left_time},'SECONDS');`;
     } 
 
     // flying_right_distance
@@ -78,7 +78,7 @@ export const toolbarFunctionHandler = () => {
     // flying_right_time
     javascriptGenerator.forBlock['flying_right_time'] = function(block) {
         const fly_right_distance = block.getFieldValue('SECONDS')
-        return `flyRight(${fly_right_distance},'CM');`;
+        return `flyRight(${fly_right_distance},'SECONDS');`;
     } 
 
     // flying_up_distance
@@ -92,7 +92,7 @@ export const toolbarFunctionHandler = () => {
     // flying_up_time
     javascriptGenerator.forBlock['flying_up_time'] = function(block) {
         const fly_up_distance = block.getFieldValue('SECONDS')
-        return `flyUp(${fly_up_distance},'CM');`;
+        return `flyUp(${fly_up_distance},'SECONDS');`;
     } 
 
     // flying_down_distance
@@ -106,7 +106,7 @@ export const toolbarFunctionHandler = () => {
     // flying_down_time
     javascriptGenerator.forBlock['flying_up_time'] = function(block) {
         const flying_down_distance = block.getFieldValue('SECONDS')
-        return `flyDown(${flying_down_distance},'CM');`;
+        return `flyDown(${flying_down_distance},'SECONDS');`;
     } 
 
     // speed

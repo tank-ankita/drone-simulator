@@ -29,7 +29,8 @@ export const Drone = ({
   waitTime,
   speed,
   setDronePosition,
-  rotate
+  rotate,
+  enableMouseControl
 }) => {
 
   const memoizedDrone = useMemo(() => { return useGLTF('assets/models/drone.glb'); }, []);
@@ -41,8 +42,6 @@ export const Drone = ({
   const { camera } = useThree(); 
 
   const [path, setPath] = useState([new THREE.Vector3(0, 0, 0)]); 
-
-  const allowDroneCamera = true;
   const droneSpeep = 0.05
 
   useEffect(() => {
@@ -87,7 +86,7 @@ export const Drone = ({
     droneRef.current.position.add(velocity.current);
 
     // Update camera to follow drone
-    if (allowDroneCamera) {
+    if (!enableMouseControl) {
       const cameraOffset = new THREE.Vector3(0, 1, -5); // Camera position relative to the drone
       cameraOffset.applyQuaternion(droneRef.current.quaternion); // Apply the drone's rotation to the camera
       camera.position.copy(droneRef.current.position.clone().add(cameraOffset));
@@ -126,7 +125,7 @@ export const Drone = ({
   
 
   const moveContinuous = (directionVector, seconds) => {
-    const distancePerFrame = 0.001;
+    const distancePerFrame = 0.0001;
     const frameTime = 1000 / 60; 
     let elapsedTime = 0;
     const totalTime = seconds * 1000; 
@@ -137,6 +136,7 @@ export const Drone = ({
       elapsedTime += frameTime;
       if (elapsedTime < totalTime) setTimeout(moveStep, frameTime); 
     };
+    
     moveStep();
   };
   
@@ -149,16 +149,11 @@ export const Drone = ({
   };
   
   // Movement functions using the generalized moveDrone function
-  const moveNegX = (params) => {
-    //fix this
-    if(params[1] == SECONDS) moveContinuous(new THREE.Vector3(1, 0, 0))
-    else moveDrone(new THREE.Vector3(1, 0, 0),  params)
-  } 
-    
+  const moveNegX = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(1, 0, 0),  params[0]) : moveDrone(new THREE.Vector3(1, 0, 0),  params); 
   const movePosX = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(-1, 0, 0), params[0]) : moveDrone(new THREE.Vector3(-1, 0, 0), params);
   const movePosY = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(0, 1, 0),  params[0]) : moveDrone(new THREE.Vector3(0, 1, 0),  params);
   const moveNegY = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(0, -1, 0), params[0]) : moveDrone(new THREE.Vector3(0, -1, 0), params);
-  const movePosZ = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(0, 0, 1), params[0]) : moveDrone(new THREE.Vector3(0, 0, 1), params);
+  const movePosZ = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(0, 0, 1),  params[0]) : moveDrone(new THREE.Vector3(0, 0, 1),  params);
   const moveNegZ = (params) => params[1] == SECONDS ? moveContinuous(new THREE.Vector3(0, 0, -1), params[0]) : moveDrone(new THREE.Vector3(0, 0, -1), params);
   
 
@@ -199,6 +194,7 @@ export const Drone = ({
 };
 
 Drone.propTypes = {
+  enableMouseControl: PropTypes.any,
   setDronePosition: PropTypes.func,
   moveDronePosY: PropTypes.any, 
   moveDroneNegY: PropTypes.any,
@@ -209,5 +205,5 @@ Drone.propTypes = {
   controlsRef: PropTypes.any,
   waitTime: PropTypes.any, 
   speed: PropTypes.any,
-  rotate: PropTypes.any
+  rotate: PropTypes.any,
 };

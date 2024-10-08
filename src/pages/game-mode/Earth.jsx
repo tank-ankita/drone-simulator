@@ -17,46 +17,50 @@ export const Earth = () => {
 
     return (
         <group>
-            <mesh ref={earthRef} position={[0, 0, -5]}>
-                <sphereGeometry args={[1, 64, 64]} />  {/* [radius, x-axis, y-axis] */}
+            <mesh ref={earthRef} position={[0, 0, 30]}>
+                <sphereGeometry args={[2, 100, 100]} />
                 <meshStandardMaterial map={earthTexture} />
             </mesh>
-            <ISS></ISS>
-            <Moon></Moon>
+            <ISS earthRef={earthRef}/>
+            <Moon earthRef={earthRef} /> {/* Pass the Earth reference to the Moon */}
         </group>
     )
 }
 
-const ISS = () => {
-    const memoizedISS = useMemo(()=> {
+const ISS = ({ earthRef }) => {
+    const memoizedISS = useMemo(() => {
         return useGLTF('assets/models/iss_model.glb')
     })
     const issRef = useRef()
-    useFrame(({clock}) =>{
-        issRef.current.position.x = Math.sin(clock.getElapsedTime()*0.1)*5;
-        issRef.current.position.z = Math.cos(clock.getElapsedTime()*0.1)*5;
-
+    
+    useFrame(({ clock }) => {
+        // Make the ISS orbit around the Earth
+        const radius = 5; // Distance from the Earth
+        issRef.current.position.x = earthRef.current.position.x + Math.sin(clock.getElapsedTime() * 0.1) * radius;
+        issRef.current.position.z = earthRef.current.position.z + Math.cos(clock.getElapsedTime() * 0.1) * radius;
+        issRef.current.position.y = 3; // Set a height for the ISS
     })
 
     return (
-        <mesh ref={issRef} position={[0,1,1]}>
-            <primitive object={memoizedISS.scene} position={[2,0,0]} scale={0.005}/>
+        <mesh ref={issRef} position={[0, 0, 0]}>
+            <primitive object={memoizedISS.scene} scale={0.005} />
         </mesh>
     )
 }
 
-const Moon = () => {
+const Moon = ({earthRef}) => {
     const moonRef = useRef();
     useFrame(({clock}) => {
-        moonRef.current.position.x = Math.sin(clock.getElapsedTime() * 0.2) * 4;
-        moonRef.current.position.z = Math.cos(clock.getElapsedTime() * 0.2) * 4;
+        const radius = 4; // Distance from the Earth
+        moonRef.current.position.x = earthRef.current.position.x + Math.sin(clock.getElapsedTime() * 0.2) * radius;
+        moonRef.current.position.z = earthRef.current.position.z + Math.cos(clock.getElapsedTime() * 0.2) * radius;
         moonRef.current.rotation.y += 0.002;
     })
 
     const moonTexture = useTexture('assets/textures/moon.jpg')
 
-    return <mesh ref={moonRef} position={[4,0,0]}>
-        <sphereGeometry args={[0.5, 32, 32]} />  {/* [radius, x-axis, y-axis] */}
+    return <mesh ref={moonRef} position={[0,0,0]}>
+        <sphereGeometry args={[1, 50, 50]} />  {/* [radius, x-axis, y-axis] */}
         <meshStandardMaterial map={moonTexture} />
     </mesh>
 

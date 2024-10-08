@@ -12,7 +12,8 @@ function Simulator({
     waitTime,
     speed,
     setDronePosition,
-    rotate
+    rotate,
+    enableMouseControl
   }) {
   return (
     <>
@@ -27,12 +28,15 @@ function Simulator({
         speed={speed}
         setDronePosition={setDronePosition}
         rotate={rotate}
+        enableMouseControl={enableMouseControl}
       />
     </>
   );
 }
 
 Simulator.propTypes = {
+  enableMouseControl:PropTypes.any,
+  setDronePosition: PropTypes.any,
   moveDronePosY: PropTypes.any, 
   moveDroneNegY: PropTypes.any,
   moveDronePosZ: PropTypes.any, 
@@ -41,8 +45,7 @@ Simulator.propTypes = {
   moveDroneNegX: PropTypes.any,
   waitTime: PropTypes.any, 
   speed: PropTypes.any,
-  setDronePosition: PropTypes.any,
-  rotate: PropTypes.any
+  rotate: PropTypes.any,
 };
 
 export default Simulator;

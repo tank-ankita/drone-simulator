@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { javascriptGenerator } from 'blockly/javascript';
@@ -17,6 +17,7 @@ import "../../../css/blockpad.css";
 Blockly.setLocale(En);
 
 const BlockPad = ({ 
+  enableMouseControl,
   moveDronePosY, 
   moveDroneNegY,
   moveDronePosZ,
@@ -30,30 +31,29 @@ const BlockPad = ({
   
   const blocklyDiv = useRef();
   let workspaceRef = useRef();
-  
-  const clearWorkspace = () => {
-    Blockly.getMainWorkspace().clear();
-  };
 
+  const [toggleValue, setToggleValue] = useState(false);
+  const handleToggleChange = () => { setToggleValue(prevValue => {!prevValue; enableMouseControl(!prevValue)});};
+
+  const clearWorkspace = () => { Blockly.getMainWorkspace().clear(); };
   const droneTakeOff = (distance) => { moveDronePosY([distance, 'CM']);  }
   
-  const flyDown = (distance, measurement) => {  moveDroneNegY([distance, measurement]); }
-  const flyUp = (distance, measurement) => { moveDronePosY([distance, measurement]); }
+  const flyDown = (distance, measurement) => { moveDroneNegY([distance, measurement]); }
+  const flyUp   = (distance, measurement) => { moveDronePosY([distance, measurement]); }
 
-  const flyForward = (distance, measurement) => { moveDronePosZ([distance, measurement]); }
+  const flyForward  = (distance, measurement) => { moveDronePosZ([distance, measurement]); }
   const flyBackward = (distance, measurement) => { moveDroneNegZ([distance, measurement]); }
   
-  const flyLeft = (distance, measurement, direction) => { moveDroneNegX([distance, measurement, direction]); }
+  const flyLeft  = (distance, measurement) => { moveDroneNegX([distance, measurement]); }
   const flyRight = (distance, measurement) => { moveDronePosX([distance, measurement]); }
 
-  const setSpeed = (value) => { speed(value) }
+  const setSpeed    = (value) => { speed(value) }
   const setWaitTime = (value) => { waitTime(value) }
 
   const rotateDrone = (direction, degree, radius, unit) => { rotate([direction, degree, radius, unit]) }
 
   const runSimulator = () => {
     var code = javascriptGenerator.workspaceToCode(Blockly.getMainWorkspace().current);
-    console.log(code);
     eval(code)
   };
 
@@ -89,6 +89,10 @@ const BlockPad = ({
         <ActionButton onClick={clearWorkspace} title="Clear Workspace" green></ActionButton>
         <ActionButton onClick={runSimulator} title="Launch Simulation"></ActionButton>
         <ActionButton onClick={reloadPage} title="Reset Simulation">/</ActionButton>
+        <label className="toggle-switch">
+          <input type="checkbox" checked={toggleValue} onChange={handleToggleChange}/>
+          <span className="slider">Enable Mouse Control</span>
+        </label>
       </div>
       
       <div ref={blocklyDiv} className='blockly-area' />
@@ -98,6 +102,7 @@ const BlockPad = ({
 };
 
 BlockPad.propTypes = {
+  enableMouseControl: PropTypes.any,
   moveDronePosY: PropTypes.any, 
   moveDroneNegY: PropTypes.any,
   moveDronePosZ: PropTypes.any, 

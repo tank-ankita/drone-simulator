@@ -14,7 +14,8 @@ export const GameMode = ({
     waitTime,
     speed,
     setDronePosition,
-    rotate
+    rotate,
+    enableMouseControl
   }) => {
   return (
       <Canvas >
@@ -29,6 +30,7 @@ export const GameMode = ({
           speed={speed}
           setDronePosition={setDronePosition}
           rotate={rotate}
+          enableMouseControl={enableMouseControl}
         />
       </Canvas>
   );
@@ -44,5 +46,6 @@ GameMode.propTypes = {
   waitTime: PropTypes.any, 
   speed: PropTypes.any,
   setDronePosition: PropTypes.any,
-  rotate: PropTypes.any
+  rotate: PropTypes.any,
+  enableMouseControl: PropTypes.any
 };

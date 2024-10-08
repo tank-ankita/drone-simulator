@@ -67,4 +67,15 @@ html, body {
 
 .toolbar {
   height: 55px;
+
+  .position {
+    padding: 10px;
+    padding-top: 15px;
+    font-family: monospace;
+    text-align: center;
+
+    .coordinate {
+      padding-right: 31px;
+    }
+  }
 }

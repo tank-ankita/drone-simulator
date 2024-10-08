@@ -1,9 +1,9 @@
-import { useState } from "react";
-import "../../css/droneSimulator.css";
-
 import { AppContainer } from '../../components/AppContainer.jsx'
 import Simulator from "./simulator/Simulator.jsx"; 
 import BlockPad from './blockly/BlockPad.jsx';
+import "../../css/droneSimulator.css";
+import { useState } from "react";
+
 
 const DroneSimulator = () => {
   const [moveDronePosY, setDronePosY] = useState(null);
@@ -15,6 +15,7 @@ const DroneSimulator = () => {
   const [speed, setSpeed] = useState(null);
   const [waitTime, setWaitTime] = useState(null);
   const [rotate, setRotate] = useState(null); 
+  const [enableMouseControl, setEnableMouseControl] = useState(null); 
 
   const [dronePosition, setDronePosition] = useState({ x: 0, y: 0, z: 0 });
 
@@ -58,6 +59,11 @@ const DroneSimulator = () => {
     setTimeout(() => setRotate(null), 1000);
   }
 
+  const mouseControl = (value) => {
+    setEnableMouseControl(value);
+    setTimeout(() => setRotate(null), 1000);
+  }
+
   const bufferTime = (value) => {
     setWaitTime(value);
     setTimeout(() => setWaitTime(null), 1000);
@@ -66,23 +72,7 @@ const DroneSimulator = () => {
   const roundNumber = (number) => {
     return parseFloat(number).toFixed(2);
   }
-
-  const getRotation = (dronePosition) => {
-    let X = roundNumber(dronePosition.xRot)*60;
-    let Y = roundNumber(dronePosition.yRot)*60;
-    let Z = roundNumber(dronePosition.zRot)*60;
-
-    return `Xr: ${X} Degree   Yr: ${Y} Degree  Zr: ${Z} Degree`;
-  }
-
-  const getPosition =(dronePosition) => {
-    let x = roundNumber(dronePosition.xPos);
-    let y = roundNumber(dronePosition.yPos);
-    let z = roundNumber(dronePosition.zPos);
-
-    return `X: ${x} cm   Y: ${y} cm  Z: ${z} cm`;
-  }
-
+  
     return (
       <AppContainer>     
           <div className="simulation-container">
@@ -94,18 +84,24 @@ const DroneSimulator = () => {
                 moveDroneNegZ={moveDroneNegativeZ}
                 moveDronePosX={moveDronePositiveX}
                 moveDroneNegX={moveDroneNegativeX}
+                waitTime={bufferTime}
                 rotate={rotateDrone}
                 speed={droneSpeed}
-                waitTime={bufferTime}
+                enableMouseControl={mouseControl}
               />
             </div>
             
             <div className="canvas-container">
               <div className="toolbar">
-              <p>{getPosition(dronePosition)}</p>
-              <p>{getRotation(dronePosition)}</p>
+                <div className="position">
+                  <span className="coordinate">X: {roundNumber(dronePosition.xPos)} cm </span>
+                  <span className="coordinate">Z: {roundNumber(dronePosition.zPos)} cm </span>
+                  <span className="coordinate">Altitude: {roundNumber(dronePosition.yPos)} cm </span>
+                  <span className="rotation">Yaw: {roundNumber(dronePosition.yRot) * 60}°</span>
+                </div>
               </div>
               <Simulator 
+                enableMouseControl={enableMouseControl}
                 moveDronePosY={moveDronePosY}
                 moveDroneNegY={moveDroneNegY}
                 moveDronePosZ={moveDronePosZ}
