@@ -10,9 +10,9 @@ import 'blockly/javascript';
 import 'blockly/blocks';
 
 import { toolbarConfig, toolbarBlocksDefinitions } from './config/toolbar.js'
-import ActionButton from '../../../components/ActionButton.jsx';
+import ActionButton from '../ActionButton.jsx';
 import  Theme  from './config/theme.js';
-import "../../../css/blockpad.css";
+import "../../css/blockpad.css";
 
 Blockly.setLocale(En);
 

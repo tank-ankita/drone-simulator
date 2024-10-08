@@ -1,7 +1,7 @@
 import { AppContainer } from '../../components/AppContainer.jsx'
 import CitySimulator from "./simulator/CitySimulator.jsx"; 
-import BlockPad from './blockly/BlockPad.jsx';
-import "../../css/droneSpaceSimulator.css";
+import BlockPad from '../../components/blockly/BlockPad.jsx';
+import "../../css/droneCitySimulator.css";
 import { useState } from "react";
 
 

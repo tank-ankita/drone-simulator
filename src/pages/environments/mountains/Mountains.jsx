@@ -5,9 +5,9 @@ import { OrbitControls } from "@react-three/drei";
 import { Drone }  from '../../../components/drone/Drone.jsx'
 import PropTypes from 'prop-types';
 
-import '../../../css/city.css'
+import '../../../css/mountains.css'
 
-const City = ({ 
+const Mountains = ({ 
     moveDronePosY,
     moveDroneNegY,
     moveDronePosZ,
@@ -46,7 +46,7 @@ const City = ({
 };
 
 
-City.propTypes = {
+Mountains.propTypes = {
   moveDronePosY: PropTypes.any, 
   moveDroneNegY: PropTypes.any,
   moveDronePosZ: PropTypes.any, 
@@ -61,4 +61,4 @@ City.propTypes = {
 };
   
 
-export default City;
+export default Mountains;
