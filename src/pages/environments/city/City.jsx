@@ -1,44 +1,66 @@
 /* eslint-disable react/no-unknown-property */
 import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Sky, Environment } from '@react-three/drei';
 import { useRef } from "react";
-import { OrbitControls, Environment, useTexture } from "@react-three/drei";
-import { Drone } from '../../../components/drone/Drone.jsx'
 import PropTypes from 'prop-types';
 import * as THREE from 'three';
+import '../../../css/city.css';
+import { Drone } from '../../../components/drone/Drone';
+import {buildingGroup1, buildingGroup2, buildingGroup3, buildingGroup4, buildingGroup5, hospital, fireStation} from './config.js'
 
-import '../../../css/city.css'
 
-// Building Component with textures for realism
-const Building = ({ position, size }) => {
-  const [concreteTexture, windowTexture] = useTexture([
-    'assets/textures/neptune.jpg',  // Replace with real texture path
-    'assets/textures/sun.jpg'    // Replace with real texture path
-  ]);
 
+const Road = ({color, position, rotation, dimensions }) => {
   return (
-    <mesh position={position} castShadow receiveShadow>
-      <boxBufferGeometry attach="geometry" args={size} />
-      <meshStandardMaterial attach="material" map={concreteTexture} />
-      <meshStandardMaterial attach="material" map={windowTexture} />
+    <mesh receiveShadow rotation={rotation} position={position}>
+      <planeGeometry args={dimensions} />
+      <meshStandardMaterial color={color} />
     </mesh>
   );
 };
 
-// Ground with texture
-const Ground = () => {
-  const groundTexture = useTexture('assets/textures/venus.jpg');  // Replace with real texture path
-  groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
-  groundTexture.repeat.set(50, 50);  // Tile the ground texture
-
+const BuildingGroup = ({ buildings, rotation }) => {
   return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.5, 0]} receiveShadow>
-      <planeBufferGeometry attach="geometry" args={[200, 200]} />
-      <meshStandardMaterial attach="material" map={groundTexture} />
-    </mesh>
+    <group rotation={[0, rotation, 0]}>  {/* Rotate around the Y-axis */}
+      {buildings.map((building, index) => (
+        <mesh key={index} position={[building.position[0], (building.height / 2) - 5, building.position[2]]} castShadow>
+          <boxGeometry args={[building.width, building.height, building.length]} />
+          <meshStandardMaterial color={building.color} />
+        </mesh>
+      ))}
+    </group>
   );
 };
 
-const City = ({ 
+
+// Stripes Component - Now wrapped in a group for collective rotation
+const Stripes = ({ roadPosition, groupRotation, stripeColor, stripeDimension, stripeCount }) => {
+  const stripes = [];
+
+  for (let i = 0; i < stripeCount; i++) {
+    const zPosition = roadPosition[2] - (i * 10);
+    stripes.push(
+      <mesh
+        key={i}
+        position={[roadPosition[0], roadPosition[1] + 0.01, zPosition]} 
+        receiveShadow
+      >
+        <boxGeometry args={stripeDimension} /> 
+        <meshStandardMaterial color={stripeColor} />
+      </mesh>
+    );
+  }
+
+  return (
+    <group rotation={groupRotation}> {/* Rotate the entire group */}
+      {stripes}
+    </group>
+  );
+};
+
+
+
+const City = ({
   moveDronePosY,
   moveDroneNegY,
   moveDronePosZ,
@@ -54,38 +76,39 @@ const City = ({
   const controlsRef = useRef();
 
   return (
-    <Canvas shadows camera={{ position: [10, 10, 20], fov: 50 }}>
-      <color attach="background" args={['skyblue']} />
+    <Canvas shadows camera={{ position: [100, 100, 50], fov: 60 }} onCreated={({ scene }) => {}}>
+      <ambientLight intensity={0.4} />
+      <Environment preset="sunset" /> 
+      <Road position={[0, -0.5, 0]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[100,100]} color="#444"/>
       
-      {/* Lighting */}
-      <ambientLight intensity={0.3} />
-      <directionalLight 
-        position={[10, 10, 10]} 
-        intensity={1} 
-        castShadow 
-        shadow-mapSize-width={1024} 
-        shadow-mapSize-height={1024}
-      />
-      
-      <OrbitControls ref={controlsRef} enablePan={true} enableZoom={true} />
-      
-      {/* Ground */}
-      <Ground />
+      <Road position={[0, 0, -35]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[75,8]} color="lightgray"/>
+      <Stripes stripeCount={7} roadPosition={[-35, 0, 30]} groupRotation={[0, -Math.PI / 2, 0]}  stripeColor="white" stripeDimension={[0.5, 0.1, 5]} /> 
 
-      {/* Buildings */}
-      <Building position={[-10, 2.5, -10]} size={[4, 10, 4]} />
-      <Building position={[10, 3, -10]} size={[5, 15, 5]} />
-      <Building position={[-10, 4, 10]} size={[3, 20, 3]} />
-      <Building position={[10, 2.5, 10]} size={[4, 10, 4]} />
-      <Building position={[-20, 3, -20]} size={[6, 8, 6]} />
-      <Building position={[20, 2.5, -20]} size={[3, 10, 3]} />
-      
-      {/* Environment (HDR) for realistic reflections */}
-      <Environment preset="city" />
-      
-      {/* Drone */}
-      <Drone 
-        controlsRef={controlsRef} 
+      <Road position={[-34, -0.2, -1.5]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[8,75]} color="lightgray"/>
+      <Stripes stripeCount={7} roadPosition={[-34, 0, 30]} groupRotation={[0, 0, 0]}  stripeColor="white" stripeDimension={[0.5, 0.1, 5]} /> 
+
+      <Road position={[34, 0, -1.5]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[8,75]} color="lightgray"/>
+      <Stripes stripeCount={7} roadPosition={[34, 0, 30]} groupRotation={[0, 0, 0]}  stripeColor="white" stripeDimension={[0.5, 0.1, 5]} /> 
+
+      <Road position={[0, 0, 35]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[76,8]} color="lightgray"/>
+      <Stripes stripeCount={7} roadPosition={[35, 0, 30]} groupRotation={[0, -Math.PI / 2, 0]}  stripeColor="white" stripeDimension={[0.5, 0.1, 5]} /> 
+
+      {buildingGroup1.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[0]} />   ))}
+      {buildingGroup2.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[-Math.PI / 2]} />   ))}
+      {buildingGroup3.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[-Math.PI / -2]} /> ))}
+      {buildingGroup4.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[0]} />    ))}
+
+      {buildingGroup5.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[0]} />   ))}
+      <Road position={[0, 0, 16]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[60,8]} color="lightgray"/>
+      <Road position={[0, -0.2, -6]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[8,50]} color="yellowgreen"/>
+
+      {hospital.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[0]} />   ))}
+      {fireStation.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[0]} />   ))}
+
+      <OrbitControls ref={controlsRef} enablePan={true} enableZoom={true} />
+
+      <Drone
+        controlsRef={controlsRef}
         moveDronePosY={moveDronePosY}
         moveDroneNegY={moveDroneNegY}
         moveDronePosZ={moveDronePosZ}
@@ -103,13 +126,13 @@ const City = ({
 };
 
 City.propTypes = {
-  moveDronePosY: PropTypes.any, 
+  moveDronePosY: PropTypes.any,
   moveDroneNegY: PropTypes.any,
-  moveDronePosZ: PropTypes.any, 
+  moveDronePosZ: PropTypes.any,
   moveDroneNegZ: PropTypes.any,
-  moveDronePosX: PropTypes.any, 
+  moveDronePosX: PropTypes.any,
   moveDroneNegX: PropTypes.any,
-  waitTime: PropTypes.any, 
+  waitTime: PropTypes.any,
   speed: PropTypes.any,
   setDronePosition: PropTypes.any,
   rotate: PropTypes.any,

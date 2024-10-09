@@ -3,8 +3,7 @@
 
 import { useTexture } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
-import { useGLTF } from "@react-three/drei"
-import { useMemo, useRef } from "react"
+import { useRef } from "react"
 
 // Planet	Radius 	Distance from Sun
 // Mercury	2,440	57.9	

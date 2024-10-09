@@ -39,7 +39,7 @@ export const Earth = () => {
 
 const ISS = ({ earthRef }) => {
     const memoizedISS = useMemo(() => {
-        return useGLTF('assets/models/iss_model.glb')
+        return useGLTF('assets/models/space/iss_model.glb')
     })
     const issRef = useRef()
     
