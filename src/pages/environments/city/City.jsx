@@ -1,14 +1,22 @@
 /* eslint-disable react/no-unknown-property */
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Sky, Environment } from '@react-three/drei';
-import { useRef } from "react";
+import React, { useRef } from "react";
 import PropTypes from 'prop-types';
 import * as THREE from 'three';
 import '../../../css/city.css';
-import { Drone } from '../../../components/drone/Drone';
-import {buildingGroup1, buildingGroup2, buildingGroup3, buildingGroup4, buildingGroup5, hospital, fireStation} from './config.js'
+import { Drone } from '../../../components/drone/city/Drone.jsx';
+import { buildingGroup1, buildingGroup2, buildingGroup3, buildingGroup4, buildingGroup5, hospital, fireStation} from './config.js'
 
-
+export const allBuildings = [
+  ...buildingGroup1.flat(),
+  ...buildingGroup2.flat(),
+  ...buildingGroup3.flat(),
+  ...buildingGroup4.flat(),
+  ...buildingGroup5.flat(),
+  ...hospital.flat(),
+  ...fireStation.flat(),
+];
 
 const Road = ({color, position, rotation, dimensions }) => {
   return (
@@ -19,19 +27,18 @@ const Road = ({color, position, rotation, dimensions }) => {
   );
 };
 
-const BuildingGroup = ({ buildings, rotation }) => {
+const BuildingGroup = React.forwardRef(({ buildings, rotation }, ref) => {
   return (
-    <group rotation={[0, rotation, 0]}>  {/* Rotate around the Y-axis */}
+    <group rotation={[0, rotation, 0]} ref={ref}>
       {buildings.map((building, index) => (
-        <mesh key={index} position={[building.position[0], (building.height / 2) - 5, building.position[2]]} castShadow>
+        <mesh key={index} position={[building.position[0], (building.height / 2) - 5, building.position[2]]} castShadow name={building.name}>
           <boxGeometry args={[building.width, building.height, building.length]} />
           <meshStandardMaterial color={building.color} />
         </mesh>
       ))}
     </group>
   );
-};
-
+});
 
 // Stripes Component - Now wrapped in a group for collective rotation
 const Stripes = ({ roadPosition, groupRotation, stripeColor, stripeDimension, stripeCount }) => {
@@ -58,8 +65,6 @@ const Stripes = ({ roadPosition, groupRotation, stripeColor, stripeDimension, st
   );
 };
 
-
-
 const City = ({
   moveDronePosY,
   moveDroneNegY,
@@ -74,10 +79,10 @@ const City = ({
   enableMouseControl
 }) => {
   const controlsRef = useRef();
-
+  const refBuildings = [];
   return (
-    <Canvas shadows camera={{ position: [100, 100, 50], fov: 60 }} onCreated={({ scene }) => {}}>
-      <ambientLight intensity={0.4} />
+  <Canvas shadows onCreated={({ scene }) => {}}>
+    <ambientLight intensity={0.4} />
       <Environment preset="sunset" /> 
       <Road position={[0, -0.5, 0]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[100,100]} color="#444"/>
       
@@ -93,22 +98,23 @@ const City = ({
       <Road position={[0, 0, 35]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[76,8]} color="lightgray"/>
       <Stripes stripeCount={7} roadPosition={[35, 0, 30]} groupRotation={[0, -Math.PI / 2, 0]}  stripeColor="white" stripeDimension={[0.5, 0.1, 5]} /> 
 
-      {buildingGroup1.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[0]} />   ))}
-      {buildingGroup2.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[-Math.PI / 2]} />   ))}
-      {buildingGroup3.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[-Math.PI / -2]} /> ))}
-      {buildingGroup4.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[0]} />    ))}
+      {buildingGroup1.map((group, index) => ( <BuildingGroup key={index} buildings={group} ref={(mesh) => refBuildings.push(mesh)} rotation={[0]} />   ))}
+      {buildingGroup2.map((group, index) => ( <BuildingGroup key={index} buildings={group} ref={(mesh) => refBuildings.push(mesh)} rotation={[-Math.PI / 2]} />   ))}
+      {buildingGroup3.map((group, index) => ( <BuildingGroup key={index} buildings={group} ref={(mesh) => refBuildings.push(mesh)} rotation={[-Math.PI / -2]} /> ))}
+      {buildingGroup4.map((group, index) => ( <BuildingGroup key={index} buildings={group} ref={(mesh) => refBuildings.push(mesh)} rotation={[0]} />    ))}
 
-      {buildingGroup5.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[0]} />   ))}
+      {buildingGroup5.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[0]} ref={(mesh) => refBuildings.push(mesh)} />   ))}
       <Road position={[0, 0, 16]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[60,8]} color="lightgray"/>
       <Road position={[0, -0.2, -6]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[8,50]} color="yellowgreen"/>
 
-      {hospital.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[0]} />   ))}
-      {fireStation.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[0]} />   ))}
+      {hospital.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[0]} ref={(mesh) => refBuildings.push(mesh)} />   ))}
+      {fireStation.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[0]} ref={(mesh) => refBuildings.push(mesh)} />   ))}
 
       <OrbitControls ref={controlsRef} enablePan={true} enableZoom={true} />
 
       <Drone
         controlsRef={controlsRef}
+        buildings={refBuildings}
         moveDronePosY={moveDronePosY}
         moveDroneNegY={moveDroneNegY}
         moveDronePosZ={moveDronePosZ}
@@ -121,7 +127,8 @@ const City = ({
         rotate={rotate}
         enableMouseControl={enableMouseControl}
       />
-    </Canvas>
+  
+  </Canvas>
   );
 };
 

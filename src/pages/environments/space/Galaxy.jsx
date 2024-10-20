@@ -7,7 +7,7 @@ import { useFrame } from "@react-three/fiber";
 import { Earth }  from './Earth'
 import { Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Sun }  from './Planets'
 
-import { Drone }  from '../../../components/drone/Drone'
+import { Drone }  from '../../../components/drone/space/Drone'
 import PropTypes from 'prop-types';
 
 import '../../../css/space.css'
