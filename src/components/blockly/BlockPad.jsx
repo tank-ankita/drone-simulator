@@ -34,6 +34,16 @@ const BlockPad = ({
   const blocklyDiv = useRef();
   let workspaceRef = useRef();
 
+  // Function to initialize the interpreter with custom methods
+const initInterpreter = (interpreter, globalObject) => {
+  // Inject custom functions into the interpreter's context
+  const wrapFunction = (fn) => (arg1, arg2) => fn(parseInt(arg1, 10), arg2 ? arg2.toString() : '');
+
+  interpreter.setProperty(globalObject, 'droneTakeOff', interpreter.createNativeFunction(wrapFunction(droneTakeOff)));
+  interpreter.setProperty(globalObject, 'flyForward',interpreter.createNativeFunction(wrapFunction(flyForward)));
+  interpreter.setProperty( globalObject,'flyBackward',interpreter.createNativeFunction(wrapFunction(flyBackward)));
+};
+
   const [toggleValue, setToggleValue] = useState(false);
   const handleToggleChange = () => { setToggleValue(prevValue => {!prevValue; enableMouseControl(!prevValue)});};
 
@@ -56,56 +66,18 @@ const BlockPad = ({
 
   const runSimulator = () => {
     var code = javascriptGenerator.workspaceToCode(Blockly.getMainWorkspace().current);
-    eval(code)
+    console.log(code);
+    const interpreter = new Interpreter(code, initInterpreter);
+
+    const step = () => {
+      if (interpreter.step()) {
+        requestAnimationFrame(step); // Continue stepping through the code
+      }
+    };
+
+    step(); // Start interpreting
   };
 
-
-  // const runSimulator = () => {
-  //   var code = javascriptGenerator.workspaceToCode(Blockly.getMainWorkspace().current);
-  //   var myInterpreter = new Interpreter(code);
-  //   myInterpreter.run();
-  // };
-
-  // const runSimulator = () => {
-  //   const code = `
-  //     function test() {
-  //       console.log('Interpreter test running!');
-  //     }
-  //     test();
-  //   `;
-  
-  //   try {
-  //     const interpreter = new Interpreter(code);
-  //     console.log("Interpreter initialized:", interpreter);
-  
-  //     const step = () => {
-  //       if (interpreter.step()) {
-  //         console.log("Executing step...");
-  //         requestAnimationFrame(step);
-  //       } else {
-  //         console.log("All steps executed.");
-  //       }
-  //     };
-  
-  //     step();
-  //   } catch (error) {
-  //     console.error("Interpreter Error:", error);
-  //   }
-  // };
-  
-
-  // const runSimulator = () => {
-  //   const code = javascriptGenerator.workspaceToCode(Blockly.getMainWorkspace().current);
-  //   const interpreter = new Interpreter(code);
-  
-  //   const step = () => {
-  //     if (interpreter.step()) {
-  //       requestAnimationFrame(step); // Continue stepping through code
-  //     }
-  //   };
-  
-  //   step(); // Start interpreting code
-  // };
 
   const reloadPage = () => {
     location.reload();
