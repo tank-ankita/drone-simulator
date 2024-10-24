@@ -13,6 +13,8 @@ import { toolbarConfig, toolbarBlocksDefinitions } from './config/toolbar.js'
 import ActionButton from '../ActionButton.jsx';
 import  Theme  from './config/theme.js';
 import "../../css/blockpad.css";
+import Interpreter from 'js-interpreter';
+
 
 Blockly.setLocale(En);
 
@@ -56,6 +58,54 @@ const BlockPad = ({
     var code = javascriptGenerator.workspaceToCode(Blockly.getMainWorkspace().current);
     eval(code)
   };
+
+
+  // const runSimulator = () => {
+  //   var code = javascriptGenerator.workspaceToCode(Blockly.getMainWorkspace().current);
+  //   var myInterpreter = new Interpreter(code);
+  //   myInterpreter.run();
+  // };
+
+  // const runSimulator = () => {
+  //   const code = `
+  //     function test() {
+  //       console.log('Interpreter test running!');
+  //     }
+  //     test();
+  //   `;
+  
+  //   try {
+  //     const interpreter = new Interpreter(code);
+  //     console.log("Interpreter initialized:", interpreter);
+  
+  //     const step = () => {
+  //       if (interpreter.step()) {
+  //         console.log("Executing step...");
+  //         requestAnimationFrame(step);
+  //       } else {
+  //         console.log("All steps executed.");
+  //       }
+  //     };
+  
+  //     step();
+  //   } catch (error) {
+  //     console.error("Interpreter Error:", error);
+  //   }
+  // };
+  
+
+  // const runSimulator = () => {
+  //   const code = javascriptGenerator.workspaceToCode(Blockly.getMainWorkspace().current);
+  //   const interpreter = new Interpreter(code);
+  
+  //   const step = () => {
+  //     if (interpreter.step()) {
+  //       requestAnimationFrame(step); // Continue stepping through code
+  //     }
+  //   };
+  
+  //   step(); // Start interpreting code
+  // };
 
   const reloadPage = () => {
     location.reload();
