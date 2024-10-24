@@ -37,11 +37,20 @@ const BlockPad = ({
   // Function to initialize the interpreter with custom methods
 const initInterpreter = (interpreter, globalObject) => {
   // Inject custom functions into the interpreter's context
-  const wrapFunction = (fn) => (arg1, arg2) => fn(parseInt(arg1, 10), arg2 ? arg2.toString() : '');
+  const wrapFunction = (fn) => (arg1, arg2, arg3, arg4) => fn(arg1, arg2 ? arg2.toString() : '', arg3 ? arg3.toString() : '', arg4 ? arg4.toString() : '');
 
   interpreter.setProperty(globalObject, 'droneTakeOff', interpreter.createNativeFunction(wrapFunction(droneTakeOff)));
-  interpreter.setProperty(globalObject, 'flyForward',interpreter.createNativeFunction(wrapFunction(flyForward)));
-  interpreter.setProperty( globalObject,'flyBackward',interpreter.createNativeFunction(wrapFunction(flyBackward)));
+  interpreter.setProperty(globalObject, 'flyForward',   interpreter.createNativeFunction(wrapFunction(flyForward)));
+  interpreter.setProperty(globalObject, 'flyBackward',  interpreter.createNativeFunction(wrapFunction(flyBackward)));
+  interpreter.setProperty(globalObject, 'flyDown', interpreter.createNativeFunction(wrapFunction(flyDown)));
+  interpreter.setProperty(globalObject, 'flyUp',   interpreter.createNativeFunction(wrapFunction(flyUp)));
+  interpreter.setProperty(globalObject, 'flyBackward',  interpreter.createNativeFunction(wrapFunction(flyBackward)));
+  interpreter.setProperty(globalObject, 'flyLeft',   interpreter.createNativeFunction(wrapFunction(flyLeft)));
+  interpreter.setProperty(globalObject, 'flyRight',  interpreter.createNativeFunction(wrapFunction(flyRight)));
+  interpreter.setProperty(globalObject, 'setSpeed',   interpreter.createNativeFunction(wrapFunction(setSpeed)));
+  interpreter.setProperty(globalObject, 'setWaitTime',  interpreter.createNativeFunction(wrapFunction(setWaitTime)));
+  interpreter.setProperty(globalObject, 'rotateDrone',  interpreter.createNativeFunction(wrapFunction(rotateDrone)));
+
 };
 
   const [toggleValue, setToggleValue] = useState(false);
