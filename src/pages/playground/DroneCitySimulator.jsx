@@ -16,6 +16,7 @@ const DroneCitySimulator = () => {
   const [waitTime, setWaitTime] = useState(null);
   const [rotate, setRotate] = useState(null); 
   const [enableMouseControl, setEnableMouseControl] = useState(null); 
+  const [enableMeasurement, setEnableMeasurement] = useState(false); 
 
   const [dronePosition, setDronePosition] = useState({ x: 0, y: 0, z: 0 });
 
@@ -64,6 +65,10 @@ const DroneCitySimulator = () => {
     setTimeout(() => setRotate(null), 1000);
   }
 
+  const measurementControl = () => {
+    setEnableMeasurement(!enableMeasurement);
+  }
+
   const bufferTime = (value) => {
     setWaitTime(value);
     setTimeout(() => setWaitTime(null), 1000);
@@ -92,6 +97,9 @@ const DroneCitySimulator = () => {
             </div>
             
             <div className="canvas-container">
+              <div>
+                <button onClick={measurementControl}> Measurement </button>
+              </div>
               <div className="toolbar">
                 <div className="position">
                   <span className="coordinate">X: {roundNumber(dronePosition.xPos)} cm </span>
@@ -112,6 +120,7 @@ const DroneCitySimulator = () => {
                 speed={speed}
                 waitTime={waitTime}
                 setDronePosition={setDronePosition}
+                enableMeasurement={enableMeasurement}
               />
             </div>
           </div>

@@ -13,7 +13,8 @@ function CitySimulator({
     speed,
     setDronePosition,
     rotate,
-    enableMouseControl
+    enableMouseControl,
+    enableMeasurement
   }) {
   return (
     <>
@@ -29,6 +30,7 @@ function CitySimulator({
         setDronePosition={setDronePosition}
         rotate={rotate}
         enableMouseControl={enableMouseControl}
+        enableMeasurement={enableMeasurement}
       />
     </>
   );
@@ -46,6 +48,7 @@ CitySimulator.propTypes = {
   waitTime: PropTypes.any, 
   speed: PropTypes.any,
   rotate: PropTypes.any,
+  enableMeasurement: PropTypes.any
 };
 
 export default CitySimulator;

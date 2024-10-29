@@ -31,10 +31,12 @@ export const Drone = React.forwardRef(({ moveDronePosY,
     setDronePosition,
     rotate,
     enableMouseControl,
-    buildings, ...props }, ref) => {
+    buildings,
+    enableMeasurement
+  }, ref) => {
 
   const isGameMode = window.location.href.includes('game-mode');
-  const canMoveInArena = isGameMode || enableMouseControl ;
+  const canMoveInArena = isGameMode || enableMouseControl;
   
   const memoizedDrone = useMemo(() => { return useGLTF('assets/models/drone.glb'); }, []);
   const droneRef = ref || useRef();
@@ -78,7 +80,7 @@ export const Drone = React.forwardRef(({ moveDronePosY,
         raycaster.set(dronePosition, direction);
 
         // Ensure buildings array is not empty and contains valid objects
-        const validBuildings = buildings.filter(building => building);
+        const validBuildings = buildings.current.filter(building => building);
         if (validBuildings.length === 0) return;
 
         // Check for intersections with the buildings
@@ -86,7 +88,7 @@ export const Drone = React.forwardRef(({ moveDronePosY,
 
         if (intersects.length > 0) {
           // Assuming buildings have a name property
-          console.log('Colliding with:', intersects[0].object.name); // Log the name of the building
+          //console.log('Colliding with:', intersects[0].object.name); // Log the name of the building
         }
       } catch (error) {
         console.error("Error during collision detection:", error);
@@ -134,7 +136,7 @@ export const Drone = React.forwardRef(({ moveDronePosY,
     droneRef.current.position.add(velocity.current);
 
     // Update camera to follow drone
-    if (!canMoveInArena) {
+    if (!canMoveInArena && !enableMeasurement) {
       const cameraOffset = new THREE.Vector3(0, 3, -10); // Camera position relative to the drone
       cameraOffset.applyQuaternion(droneRef.current.quaternion); // Apply the drone's rotation to the camera
       camera.position.copy(droneRef.current.position.clone().add(cameraOffset));
@@ -228,7 +230,7 @@ export const Drone = React.forwardRef(({ moveDronePosY,
         <primitive 
           object={memoizedDrone.scene} 
           position={[0, 0, 0]} 
-          scale={0.2} 
+          scale={0.4} 
           rotation={[0, 0, 0]} 
         />
       </mesh>
@@ -254,5 +256,6 @@ Drone.propTypes = {
   waitTime: PropTypes.any, 
   speed: PropTypes.any,
   rotate: PropTypes.any,
-  buildings: PropTypes.any
+  buildings: PropTypes.any,
+  enableMeasurement: PropTypes.any
 };

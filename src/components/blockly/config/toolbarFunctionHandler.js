@@ -103,7 +103,7 @@ export const toolbarFunctionHandler = () => {
     } 
 
     // flying_down_time
-    javascriptGenerator.forBlock['flying_up_time'] = function(block) {
+    javascriptGenerator.forBlock['flying_down_time'] = function(block) {
         const flying_down_distance = block.getFieldValue('SECONDS')
         return `flyDown(${flying_down_distance},'SECONDS');`;
     } 

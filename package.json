@@ -21,7 +21,8 @@
     "js-interpreter": "^5.2.1",
     "react-modal": "^3.14.3",
     "react-router-dom": "^6.26.2",
-    "three": "^0.153.0"
+    "three": "^0.153.0",
+    "three.regular.helvetiker": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",

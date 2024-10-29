@@ -75,16 +75,16 @@ const initInterpreter = (interpreter, globalObject) => {
 
   const runSimulator = () => {
     var code = javascriptGenerator.workspaceToCode(Blockly.getMainWorkspace().current);
-    console.log(code);
-    const interpreter = new Interpreter(code, initInterpreter);
+    eval(code);
+    // const interpreter = new Interpreter(code, initInterpreter);
 
-    const step = () => {
-      if (interpreter.step()) {
-        requestAnimationFrame(step); // Continue stepping through the code
-      }
-    };
+    // const step = () => {
+    //   if (interpreter.step()) {
+    //     requestAnimationFrame(step); // Continue stepping through the code
+    //   }
+    // };
 
-    step(); // Start interpreting
+    // step(); // Start interpreting
   };
 
 
