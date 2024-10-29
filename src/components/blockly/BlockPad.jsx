@@ -75,16 +75,18 @@ const initInterpreter = (interpreter, globalObject) => {
 
   const runSimulator = () => {
     var code = javascriptGenerator.workspaceToCode(Blockly.getMainWorkspace().current);
-    eval(code);
-    // const interpreter = new Interpreter(code, initInterpreter);
+    console.log(code)
+    const interpreter = new Interpreter(code, initInterpreter);
 
-    // const step = () => {
-    //   if (interpreter.step()) {
-    //     requestAnimationFrame(step); // Continue stepping through the code
-    //   }
-    // };
+    const step = () => {
+      if (interpreter.step()) {
+        requestAnimationFrame(step); // Continue stepping through the code
+      } else {
+        console.log("Simulation completed"); // Optional: Log completion
+      }
+    };
 
-    // step(); // Start interpreting
+    step(); // Start interpreting
   };
 
 
@@ -122,7 +124,7 @@ const initInterpreter = (interpreter, globalObject) => {
         <ActionButton onClick={reloadPage} title="Reset Simulation" medium>/</ActionButton>
         <label className="toggle-switch">
           <input type="checkbox" checked={toggleValue} onChange={handleToggleChange}/>
-          <span className="slider">Enable Mouse Control</span>
+          <span className="slider">Mouse Control</span>
         </label>
       </div>
       

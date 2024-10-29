@@ -12,6 +12,8 @@
   align-items: center;
   gap: 10px;
   border-bottom: 1px solid #ccc; /* Optional: visual separation */
+  font-family: monospace;
+
 }
 
   
@@ -20,5 +22,7 @@
   width: 100%; /* Ensure it stretches horizontally */
   background-color: #ffffff;
   border: 1px solid #ccc;
+  font-family: monospace;
+
   overflow: auto; /* Ensure it can scroll if content is too large */
 }

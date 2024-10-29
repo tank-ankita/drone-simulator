@@ -1,63 +1,16 @@
 /* eslint-disable react/no-unknown-property */
 import { Canvas, useThree, useFrame } from '@react-three/fiber';
-import { OrbitControls, Sky, Environment } from '@react-three/drei';
+import { OrbitControls, Sky, Environment,useGLTF } from '@react-three/drei';
 import React, { useRef, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import * as THREE from 'three';
 import '../../../css/city.css';
 import { Drone } from '../../../components/drone/city/Drone.jsx';
-import { buildingGroup1, buildingGroup2, buildingGroup3, buildingGroup4, buildingGroup5, hospital, fireStation} from './config.js'
+import { Color } from 'three'; // Import Color from three
 
 let GlobalCamera;
 let GlobalScene;
 let lastPosition = null;
-
-const Road = ({color, position, rotation, dimensions }) => {
-  return (
-    <mesh receiveShadow rotation={rotation} position={position}>
-      <planeGeometry args={dimensions} />
-      <meshStandardMaterial color={color} />
-    </mesh>
-  );
-};
-
-const BuildingGroup = React.forwardRef(({ buildings, rotation }, ref) => {
-  return (
-    <group rotation={[0, rotation, 0]} ref={ref}>
-      {buildings.map((building, index) => (
-        <mesh key={index} position={[building.position[0], (building.height / 2) - 5, building.position[2]]} castShadow name={building.name}>
-          <boxGeometry args={[building.width, building.height, building.length]} />
-          <meshStandardMaterial color={building.color} />
-        </mesh>
-      ))}
-    </group>
-  );
-});
-
-// Stripes Component - Now wrapped in a group for collective rotation
-const Stripes = ({ roadPosition, groupRotation, stripeColor, stripeDimension, stripeCount }) => {
-  const stripes = [];
-
-  for (let i = 0; i < stripeCount; i++) {
-    const zPosition = roadPosition[2] - (i * 10);
-    stripes.push(
-      <mesh
-        key={i}
-        position={[roadPosition[0], roadPosition[1] + 0.01, zPosition]} 
-        receiveShadow
-      >
-        <boxGeometry args={stripeDimension} /> 
-        <meshStandardMaterial color={stripeColor} />
-      </mesh>
-    );
-  }
-
-  return (
-    <group rotation={groupRotation}> {/* Rotate the entire group */}
-      {stripes}
-    </group>
-  );
-};
 
 const CameraController = ({ enableMeasurement }) => {
   const { camera, gl, scene } = useThree();
@@ -66,7 +19,7 @@ const CameraController = ({ enableMeasurement }) => {
   useEffect(() => {
     if (enableMeasurement) {
       // Move camera to top-down view
-      camera.position.set(0, 100, 0);
+      camera.position.set(5, 25, 0); // should be (0, 100, 0)
       camera.lookAt(new THREE.Vector3(0, 0, 0));
       camera.updateProjectionMatrix();
 
@@ -109,8 +62,7 @@ const Pin = ({ position }) => {
   );
 };
 
-const handleCanvasClick = (event, setPins, enableMeasurement, allBuildings, droneRef) => {
-  
+const handleCanvasClick = (event, setPins, enableMeasurement, droneRef) => {
   if (enableMeasurement) {
     const rect = event.target.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -119,13 +71,16 @@ const handleCanvasClick = (event, setPins, enableMeasurement, allBuildings, dron
     const vector = new THREE.Vector3(x, y, 0.5);
     const raycaster = new THREE.Raycaster();
     raycaster.setFromCamera(vector, GlobalCamera);
-    
-    const intersection = raycaster.intersectObjects(allBuildings); // Adjust based on your logic
-    if (intersection.length > 0) {
-      const point = intersection[0].point; // Get the intersection point
-      setPins((prevPins) => [...prevPins, point]); // Assuming setPins is a state updater function for your pins
-      if(lastPosition == null) {
-        lastPosition = droneRef.current.position;
+
+    // Intersect the city model instead of all buildings
+    const intersections = raycaster.intersectObject(GlobalScene, true); // true for recursive
+
+    if (intersections.length > 0) {
+      const point = intersections[0].point; // Get the intersection point
+      setPins((prevPins) => [...prevPins, point]); // Update pin positions
+
+      if (lastPosition == null) {
+        lastPosition = droneRef.current.position.clone(); // Clone to avoid reference issues
       }
       const distance = lastPosition.distanceTo(point);
 
@@ -135,13 +90,14 @@ const handleCanvasClick = (event, setPins, enableMeasurement, allBuildings, dron
       const lineMaterial = new THREE.LineBasicMaterial({ color: 'red' });
       const line = new THREE.Line(lineGeometry, lineMaterial);
       GlobalScene.add(line);
-      lastPosition = point;
+      lastPosition.copy(point); // Update lastPosition to the current intersection point
 
       // Display the distance near the point
       displayDistanceText(`${distance.toFixed(2)} cm`, point);
     }
   }
 };
+
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 
@@ -151,19 +107,18 @@ const displayDistanceText = (text, position) => {
   loader.load('/node_modules/three/examples/fonts/helvetiker_regular.typeface.json', (font) => {
     const textGeometry = new TextGeometry(text, {
       font: font,
-      size: 2, // Adjust size as needed
-      height: 0.05, // Adjust height
-      curveSegments: 12,
-      bevelEnabled: true,
-      bevelThickness: 0.03,
-      bevelSize: 0.05,
-      bevelOffset: 0,
-      bevelSegments: 5,
+      size: 0.5, // Adjust size as needed
+      height: 0.09, // Adjust height
+      curveSegments: 1,
+      bevelEnabled: false,
+      bevelThickness: 0.0,
+      bevelSize: 0.03,
+      bevelSegments: 2,
     });
 
-    const textMaterial = new THREE.MeshBasicMaterial({ color: 'black' });
+    const textMaterial = new THREE.MeshBasicMaterial({ color: 'red' });
     const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-    textMesh.position.set(position.x, position.y + 0.1, position.z); // Adjust Y position slightly above the line point
+    textMesh.position.set(position.x, position.y + 0.4, position.z); // Adjust Y position slightly above the line point
     textMesh.rotation.x = -Math.PI / 2; // Rotate 90 degrees around the X-axis
 
     GlobalScene.add(textMesh); // Add the text mesh to the scene
@@ -173,6 +128,12 @@ const displayDistanceText = (text, position) => {
 };
 
 
+
+const CityModel = () => {
+  const { scene } = useGLTF('public/assets/models/city/city/city.glb'); // Load the GLB model
+  const modelPosition = [-10, 0, -1]; // Set your desired position (x, y, z)
+  return <primitive object={scene} position={modelPosition} />;
+};
 
 const City = ({
   moveDronePosY,
@@ -190,47 +151,16 @@ const City = ({
 }) => {
   const droneRef = useRef();
   const controlsRef = useRef();
-  const refBuildings = useRef([]);
   const [pins, setPins] = useState([]); // State to track pin positions
-
-  const allBuildings = useRef([]);
-
-  useEffect(() => {
-    allBuildings.current = refBuildings.current.filter(mesh => mesh); // Clean undefined references
-  }, [refBuildings.current]);
-
+  
   return (
   <Canvas 
     shadows 
-    onClick={(event) => handleCanvasClick(event, setPins, enableMeasurement, allBuildings.current, droneRef)} // Pass click event
+    onClick={(event) => handleCanvasClick(event, setPins, enableMeasurement, droneRef)} // Pass click event
   >
-    <ambientLight intensity={0.4} />
-      <Environment preset="sunset" /> 
-      <Road position={[0, -0.5, 0]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[100,100]} color="#444"/>
-      
-      <Road position={[0, 0, -35]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[75,8]} color="lightgray"/>
-      <Stripes stripeCount={7} roadPosition={[-35, 0, 30]} groupRotation={[0, -Math.PI / 2, 0]}  stripeColor="white" stripeDimension={[0.5, 0.1, 5]} /> 
-
-      <Road position={[-34, -0.2, -1.5]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[8,75]} color="lightgray"/>
-      <Stripes stripeCount={7} roadPosition={[-34, 0, 30]} groupRotation={[0, 0, 0]}  stripeColor="white" stripeDimension={[0.5, 0.1, 5]} /> 
-
-      <Road position={[34, 0, -1.5]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[8,75]} color="lightgray"/>
-      <Stripes stripeCount={7} roadPosition={[34, 0, 30]} groupRotation={[0, 0, 0]}  stripeColor="white" stripeDimension={[0.5, 0.1, 5]} /> 
-
-      <Road position={[0, 0, 35]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[76,8]} color="lightgray"/>
-      <Stripes stripeCount={7} roadPosition={[35, 0, 30]} groupRotation={[0, -Math.PI / 2, 0]}  stripeColor="white" stripeDimension={[0.5, 0.1, 5]} /> 
-
-      {buildingGroup1.map((group, index) => ( <BuildingGroup key={index} buildings={group} ref={(mesh) => {if (mesh) {refBuildings.current[index] = mesh; allBuildings.current.push(mesh);}}} rotation={[0]} />   ))}
-      {buildingGroup2.map((group, index) => ( <BuildingGroup key={index} buildings={group} ref={(mesh) => {if (mesh) {refBuildings.current[index] = mesh; allBuildings.current.push(mesh);}}} rotation={[-Math.PI / 2]} />   ))}
-      {buildingGroup3.map((group, index) => ( <BuildingGroup key={index} buildings={group} ref={(mesh) => {if (mesh) {refBuildings.current[index] = mesh; allBuildings.current.push(mesh);}}} rotation={[-Math.PI / -2]} /> ))}
-      {buildingGroup4.map((group, index) => ( <BuildingGroup key={index} buildings={group} ref={(mesh) => {if (mesh) {refBuildings.current[index] = mesh; allBuildings.current.push(mesh);}}} rotation={[0]} />    ))}
-      {buildingGroup5.map((group, index) => ( <BuildingGroup key={index} buildings={group} ref={(mesh) => {if (mesh) {refBuildings.current[index] = mesh; allBuildings.current.push(mesh);}}} rotation={[0]} />   ))}
-       
-      <Road position={[0, 0, 16]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[60,8]} color="lightgray"/>
-      <Road position={[0, -0.2, -6]} rotation={[-Math.PI / 2, 0, 0]}  dimensions={[8,50]} color="yellowgreen"/>
-
-      {hospital.map((group, index)    => ( <BuildingGroup key={index} buildings={group} rotation={[0]} ref={(mesh) => {if (mesh) {refBuildings.current[index] = mesh; allBuildings.current.push(mesh);}}} />   ))}
-      {fireStation.map((group, index) => ( <BuildingGroup key={index} buildings={group} rotation={[0]} ref={(mesh) => {if (mesh) {refBuildings.current[index] = mesh; allBuildings.current.push(mesh);}}} />   ))}
+      <ambientLight intensity={0.4} color={new THREE.Color(0xffc1a0)} /> {/* Warm light color */}
+      <Environment preset="sunset" intensity={0.5} /> {/* Adjusted intensity */}
+      <CityModel />
 
       {pins.map((pin, index) => ( <Pin key={index} position={pin} /> ))}
       <CameraController enableMeasurement={enableMeasurement} />
@@ -238,7 +168,6 @@ const City = ({
       <Drone
         ref={droneRef}
         controlsRef={controlsRef}
-        buildings={refBuildings}
         moveDronePosY={moveDronePosY}
         moveDroneNegY={moveDroneNegY}
         moveDronePosZ={moveDronePosZ}
@@ -249,6 +178,7 @@ const City = ({
         speed={speed}
         setDronePosition={setDronePosition}
         rotate={rotate}
+        droneScale={0.1}
         enableMouseControl={enableMouseControl}
         enableMeasurement={enableMeasurement}
       />

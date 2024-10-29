@@ -1,7 +1,12 @@
 .blockpad-container,
 .canvas-container {
-  flex: 1;
-  
+  flex: 1;  
+  font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, Helvetica, Arial, sans-serif !important;
+
+}
+
+.canvas-container > div {
+  margin-top: -0px; /* Adjust this value as needed for spacing */
 }
 
 .simulation-container {
@@ -14,6 +19,39 @@
 .blockpad-container {
   width: 50%; /* BlockPad takes half the space */
 }
+
+.toolbar {
+  display: flex;
+  flex-direction: column; /* Stack the rows vertically */
+  align-items: stretch;   /* Stretch the columns to fill the toolbar */
+}
+
+.row {
+  display: flex;          /* Use flexbox to create columns */
+  justify-content: space-between; /* Space between columns */
+  margin-bottom: 10px;   /* Space between rows */
+  font-family: monospace !important;
+  margin-top: 20px;
+
+}
+
+.column {
+  flex: 1;               /* Equal width for all columns */
+  text-align: left;    /* Center align text */
+
+}
+
+/* Optional: Styling for buttons and spans */
+.coordinate,
+.rotation {
+  display: block;        /* Ensure each coordinate is on a new line */
+}
+
+button {
+  padding: 10px 15px;   /* Add some padding to the button */
+  cursor: pointer;       /* Change cursor on hover */
+}
+
 
 .canvas-container {
   width: 50%; /* Canvas takes half the space */
@@ -40,7 +78,7 @@ body {
   font-size: 1em;
   font-weight: 400;
   line-height: 1.5;
-  font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, Helvetica, Arial, sans-serif !important;
+  font-family: monospace;
 }
 
 

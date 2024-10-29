@@ -70,7 +70,7 @@ const DroneSpaceSimulator = () => {
   };
 
   const roundNumber = (number) => {
-    return parseFloat(number).toFixed(2);
+    return parseInt(number)
   }
   
     return (
