@@ -5,7 +5,7 @@ import React, { useRef, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import * as THREE from 'three';
 import '../../../css/city.css';
-import { Drone } from '../../../components/drone/city/Drone.jsx';
+import { Drone } from '../../../components/drone/Drone.jsx';
 import { Color } from 'three'; // Import Color from three
 
 let GlobalCamera;
